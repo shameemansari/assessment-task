@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
-use Laravel\Ui\Presets\React;
+use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
@@ -73,7 +73,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'username' => ['required', 'string', 'max:255', 'unique:users,username'],
             'company' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'min:8', 'confirmed', 'alpha_num','regex:/[@$!%*#?&]/',],
+            'password' => ['required', 'string', Password::min(8)->numbers()->symbols(),'confirmed'],
         ],[
             'regex' => ':attribute must contain atleast one Special character'
         ],[
@@ -92,13 +92,22 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    protected function create(array $data, bool $employer = false)
     {
-        return User::create([
-            'name' => $data['name'],
+        $user = User::create([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
             'email' => $data['email'],
+            'username' => $data['username'],
             'password' => Hash::make($data['password']),
         ]);
+
+        if($employer) {
+
+        } else {
+
+        }
+        return $user;
     }
 
     public function register(Request $request)
@@ -121,6 +130,7 @@ class RegisterController extends Controller
     public function employerRegistration(Request $request)
     {
         $employerData = $this->employerValidation($request->all())->validate();
-        dd($employerData);
+         
+        event(new Registered($user = $this->create($request->all())));
     }
 }

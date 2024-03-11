@@ -11,17 +11,19 @@
         style="background-image: url({{ asset('assets/media/bg/bg-3.jpg') }});">
             <div class="login-form text-center p-7 position-relative overflow-hidden">
                 
-            
+                @include('components.alerts.success')
+                @include('components.alerts.error')
                 <!--begin::Login Sign up form-->
                 <div class="login-signup" style="display: block;">
                     <div class="mb-10">
                         <h3>Employer Registration</h3>
                     </div>
-                    <form class="form" method="POST" action="{{ route('register.employer.post') }}" class="form fv-plugins-bootstrap fv-plugins-framework">
+                    <form class="form text-left" style="min-width: 450px;" method="POST" action="{{ route('register.employer.post') }}" class="form fv-plugins-bootstrap fv-plugins-framework">
                        @csrf
                         <div class="form-group mb-5">
+                            <label>First Name <span class="text-danger">*</span></label>
                             <input class="form-control h-auto form-control-solid py-4 px-8" type="text"
-                                placeholder="First Name" name="first_name" value="{{ old('first_name') }}" />
+                                placeholder="First Name" required name="first_name" value="{{ old('first_name') }}" />
                            @error('first_name')
                                <p class="text-danger font-weight-bold text-left m-0 mt-1 mb-0">
                                    {{ $message }}
@@ -29,8 +31,9 @@
                            @enderror
                         </div>
                         <div class="form-group mb-5">
+                            <label>Last Name <span class="text-danger">*</span></label>
                             <input class="form-control h-auto form-control-solid py-4 px-8" type="text"
-                                placeholder="Last Name" name="last_name" value="{{ old('last_name') }}" />
+                                placeholder="Last Name" required name="last_name" value="{{ old('last_name') }}" />
                            @error('last_name')
                                <p class="text-danger font-weight-bold text-left m-0 mt-1 mb-0">
                                    {{ $message }}
@@ -38,8 +41,30 @@
                            @enderror
                         </div>
                         <div class="form-group mb-5">
+                            <label>Username <span class="text-danger">*</span></label>
                             <input class="form-control h-auto form-control-solid py-4 px-8" type="text"
-                                placeholder="Email" name="email" autocomplete="off" value="{{ old('email') }}"  />
+                                placeholder="Username" required name="username" value="{{ old('username') }}" />
+                           @error('username')
+                               <p class="text-danger font-weight-bold text-left m-0 mt-1 mb-0">
+                                   {{ $message }}
+                               </p>
+                           @enderror
+                        </div>
+                        <div class="form-group mb-5">
+                            <label>Company name <span class="text-danger">*</span></label>
+                            <input class="form-control h-auto form-control-solid py-4 px-8" type="text"
+                                placeholder="Company Name" id="company" required name="company" value="{{ old('company') }}"  />
+                                @error('company')
+                                <p class="text-danger font-weight-bold text-left m-0 mt-1 mb-0">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                         </div>
+  
+                        <div class="form-group mb-5">
+                            <label>Email <span class="text-danger">*</span></label>
+                            <input class="form-control h-auto form-control-solid py-4 px-8" type="text"
+                                placeholder="Email" required name="email" autocomplete="off" value="{{ old('email') }}"  />
                            @error('email')
                                 <p class="text-danger font-weight-bold text-left m-0 mt-1 mb-0">
                                     {{ $message }}
@@ -47,8 +72,9 @@
                             @enderror
                         </div>
                         <div class="form-group mb-5">
+                            <label>Password </label>
                             <input class="form-control h-auto form-control-solid py-4 px-8" type="password"
-                                placeholder="Password" name="password" />
+                                placeholder="Password" required name="password" />
                                 @error('password')
                                 <p class="text-danger font-weight-bold text-left m-0 mt-1 mb-0">
                                     {{ $message }}
@@ -56,8 +82,9 @@
                             @enderror
                         </div>
                         <div class="form-group mb-5">
+                            <label>Confirm Password </label>
                             <input class="form-control h-auto form-control-solid py-4 px-8" type="password"
-                                placeholder="Confirm Password" name="password_confirmation" />
+                                placeholder="Confirm Password" required name="password_confirmation" />
                                 @error('password_confirmation')
                                 <p class="text-danger font-weight-bold text-left m-0 mt-1 mb-0">
                                     {{ $message }}
@@ -65,16 +92,7 @@
                             @enderror
                         </div>
  
-                        <div class="form-group mb-5" id="companyContainer">
-                           <input class="form-control h-auto form-control-solid py-4 px-8" type="text"
-                               placeholder="Company Name" id="company" name="company" value="{{ old('company') }}"  />
-                               @error('company')
-                               <p class="text-danger font-weight-bold text-left m-0 mt-1 mb-0">
-                                   {{ $message }}
-                               </p>
-                           @enderror
-                        </div>
- 
+                      
                         
                         <div class="form-group mb-5 text-left">
                             <div class="checkbox-inline">
