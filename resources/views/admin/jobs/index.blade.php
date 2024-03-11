@@ -125,10 +125,12 @@
                     {
                         data: 'skills',
                         name: 'skills',
+                        searchable: false,
                     },
                     {
                         data: 'experience',
                         name: 'experience',
+                        searchable: false,
                     },
                      
                     {

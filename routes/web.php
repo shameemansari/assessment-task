@@ -46,5 +46,6 @@ Route::middleware(['verified', 'auth'])->group(function () {
     Route::get('jobs/{jobId}/edit', [GuestController::class, 'editJob'])->name('postJob.edit');
     Route::post('jobs', [GuestController::class, 'storePostJob'])->name('postJob.store');
     Route::put('jobs/update/{jobId}', [GuestController::class, 'updatePostJob'])->name('postJob.update');
+    Route::delete('jobs/{jobId}', [GuestController::class, 'deletePost'])->name('postJob.delete');
 });
     

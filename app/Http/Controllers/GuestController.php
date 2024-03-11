@@ -35,7 +35,7 @@ class GuestController extends Controller
                 })
                 ->addColumn('action', function($row){
                     return "<a href='".route('postJob.edit', ['jobId' => $row->id])."' class='btn btn-sm btn-light-info btn-icon' title='Edit details'> <i class='la la-edit'></i> </a>
-                    <a href='#' class='btn btn-sm btn-light-danger btn-icon' title='Delete'> <i class='la la-trash'></i> </a>";
+                    <button data-url='".route('postJob.delete', ['jobId' => $row->id])."' class='deleteBtn btn btn-sm btn-light-danger btn-icon' title='Delete'> <i class='la la-trash'></i> </button>";
                 })
                 ->rawColumns(['action','experience','description'])
                 ->make(true);
@@ -140,6 +140,19 @@ class GuestController extends Controller
             return back()->with(['status' => false, 'message' => $e->getMessage()]);
         }
         return to_route('postJob.index')->with(['status' => true, 'message' => 'Job post updated successfully']);
+    }
+
+    public function deletePost(Request $request, $jobId)
+    {
+        $job = PostedJob::where('id', $jobId)->first();
+        if(!$job) {
+            return back()->with(['status' => false, 'message' => "Post job not found"]);
+        }
+
+        if(!$job->delete()) {
+            return back()->with(['status' => false, 'message' => 'Failed to delete job post']);
+        }
+        return to_route('postJob.index')->with(['status' => true, 'message' => 'Job post deleted successfully']);
     }
 
 }
