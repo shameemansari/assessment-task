@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -43,7 +43,7 @@ class LoginController extends Controller
         $request->validate([
             $this->username() => 'required|string|exists:users,username',
             'password' => 'required|string',
-        ]);
+        ],[],['username' => 'Username', 'password' => 'Password']);
     }
 
     public function username()

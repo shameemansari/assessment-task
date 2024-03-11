@@ -1,6 +1,6 @@
 @extends('layouts.guest')
 
-@section('title', 'Sign In')
+@section('title', 'Login')
 
 @section('content')
     <!--begin::Main-->
@@ -14,15 +14,15 @@
                     <!--begin::Login Sign in form-->
                     <div class="login-signin">
                         <div class="mb-10">
-                            <h3>Sign In</h3>
+                            <h3>Login</h3>
                         </div>
                         <form class="form" method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="form-group mb-5">
                                 <input
-                                    class="form-control h-auto form-control-solid py-4 px-8 @error('email') is-invalid @enderror"
-                                    type="email" placeholder="Email" name="email" autocomplete="off" />
-                                @error('email')
+                                    class="form-control h-auto form-control-solid py-4 px-8 @error('username') is-invalid @enderror"
+                                    type="username" placeholder="Username" name="username" autocomplete="off" />
+                                @error('username')
                                     <span class="invalid-feedback">
                                         <strong>{{ $message }}</strong>
                                     </span>

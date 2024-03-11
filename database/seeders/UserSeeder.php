@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
 
-        $adminUser->assignRole('admin');
+        $adminUser->syncRoles('admin');
 
         $employerUser = User::create([
             'first_name' => 'NeoSOFT',
@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
 
-        $employerUser->assignRole('employer');
+        $employerUser->syncRoles('employer');
 
         $seekerUser = User::create([
             'first_name' => 'Shameem',
@@ -43,6 +43,6 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
 
-        $seekerUser->assignRole('seeker');
+        $seekerUser->syncRoles('seeker');
     }
 }
