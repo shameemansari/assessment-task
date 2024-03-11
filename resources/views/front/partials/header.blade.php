@@ -104,6 +104,18 @@
                  </div>
                  <!--end::Tablet & Mobile Search-->
 
+                 @role('employer')
+                 <div class="topbar-item">
+                     <a href="{{ route('postJob.create') }}">
+                         <div
+                             class="mx-1 btn btn-icon btn-hover-transparent-white w-auto d-flex align-items-center px-2">
+                             <span class="py-2 px-5 font-weight-bold text-white">
+                                 Post Job
+                             </span>
+                         </div>
+                     </a>
+                 </div>
+                 @endrole
 
                  <div class="topbar-item">
                      <a href="{{ route('seekerList') }}">

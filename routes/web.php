@@ -13,6 +13,8 @@ Auth::routes(['register' => false, 'verify' => true]);
 
 Route::get('job-list', [GuestController::class, 'jobList'])->name('jobList');
 Route::get('seeker-list', [GuestController::class, 'candidateList'])->name('seekerList');
+Route::get('post-job', [GuestController::class, 'postJob'])->name('postJob.create');
+Route::post('post-job', [GuestController::class, 'storePostJob'])->name('postJob.store');
 
 Route::middleware(['guest'])->group(function () {
  

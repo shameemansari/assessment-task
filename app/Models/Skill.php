@@ -13,4 +13,9 @@ class Skill extends Model
     public $fillable = [
         'name'
     ];
+
+    public function jobs()
+    {
+        return $this->belongsToMany(PostedJob::class,'job_skills','skill_id','job_id');
+    }
 }

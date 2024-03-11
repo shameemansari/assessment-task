@@ -195,7 +195,7 @@
                     <div class="d-flex ">
                         <!--begin::Container-->
                         <div class=" container " id="jobListContainer">
-                            @include('components.jobs.job_list', ['jobs' => ['hi']])
+                            @include('components.jobs.job_list', ['jobs' => []])
                         </div>
                         <!--end::Container-->
                     </div>

@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('job_skills', function (Blueprint $table) {
             $table->unsignedBigInteger('job_id');
             $table->unsignedBigInteger('skill_id');
+            $table->foreign('job_id')->references('id')->on('posted_jobs')->cascadeOnDelete();
+            $table->foreign('skill_id')->references('id')->on('skills')->cascadeOnDelete();
         });
     }
 

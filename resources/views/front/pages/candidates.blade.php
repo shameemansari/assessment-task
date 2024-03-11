@@ -160,9 +160,13 @@
                     <div class="col-12 col-md-9">
                         <div class="container">
                             <div class="row">
-                                @foreach ($seekers as $seeker)
+                                @forelse ($allSeekers as $seeker)
                                     @include('components.seekers.seeker_card',['seeker' => $seeker])
-                                @endforeach
+                                    @empty
+                                    <div class="col-12 card p-5">
+                                        <p class="mt-5 text-center">Oops! No candidate has registered yet.</p>
+                                    </div>
+                                @endforelse
                                
                             </div>
                             <!--end::Row-->
@@ -173,7 +177,7 @@
                 <!--begin::Pagination-->
                 <div class="row">
                    <div class="col-12 col-md-9 offset-md-3 card py-4">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    {{-- <div class="d-flex justify-content-between align-items-center flex-wrap">
                         <div class="d-flex flex-wrap mr-3">
                             <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i
                                     class="ki ki-bold-double-arrow-back icon-xs"></i></a>
@@ -204,7 +208,8 @@
                             </select>
                             <span class="text-muted">Displaying 10 of 230 records</span>
                         </div>
-                    </div>
+                    </div> --}}
+                    {!! $allSeekers->links() !!}
                    </div>
                 </div>
               

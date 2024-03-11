@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Seeker;
 use App\Models\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -25,10 +26,21 @@ class GuestController extends Controller
 
     public function candidateList(Request $request)
     {
-        $seekers = ['some','random','a','a'];
+        $allSeekers = Seeker::with(['user'])->paginate(10);
         $skills = Cache::remember('skills', 60, function() {
                 return Skill::latest('id')->pluck('name','id');
         });
-        return view('front.pages.candidates',compact('seekers','skills'));
+        return view('front.pages.candidates',compact('allSeekers','skills'));
+    }
+
+    public function postJob(Request $request)
+    {
+        $allSkills = Skill::pluck('name','id');
+        return view('admin.pages.post_job', compact('allSkills'));
+    }
+
+    public function storePostJob(Request $request)
+    {
+        return back()->with(['status' => true, 'message' => 'Job posted successfully']);
     }
 }
