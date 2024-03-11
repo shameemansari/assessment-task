@@ -8,4 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Seeker extends Model
 {
     use HasFactory;
+
+    public $table = 'seekers';
+
+    public $fillable = [
+        'user_id',
+        'experience',
+        'title',
+        'resume',
+    ];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
 }

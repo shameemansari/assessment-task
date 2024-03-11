@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employer;
+use App\Models\Seeker;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -53,9 +55,19 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'username' => ['required', 'string', 'max:255', 'unique:users,username'],
+            'password' => ['required', 'string', Password::min(8)->numbers()->symbols(),'confirmed'],
+        ],[
+            'regex' => ':attribute must contain atleast one Special character'
+        ],[
+            'first_name' => 'First Name',
+            'last_name' => 'Last Name',
+            'username' => 'Username',
+            'email' => 'Email address',
+            'password' => 'Password',
         ]);
     }
 
@@ -103,14 +115,16 @@ class RegisterController extends Controller
         ]);
 
         if($employer) {
-
+            $user->syncRoles('employer');
+            $newEmployer = Employer::create(['company' => $data['company'], 'user_id' => $user->id]);
         } else {
-
+            $user->syncRoles('seeker');
+            $newSeeker = Seeker::create(['user_id' => $user->id]);
         }
         return $user;
     }
 
-    public function register(Request $request)
+    public function seekerRegistration(Request $request)
     {
         $this->validator($request->all())->validate();
 
@@ -132,5 +146,17 @@ class RegisterController extends Controller
         $employerData = $this->employerValidation($request->all())->validate();
          
         event(new Registered($user = $this->create($request->all())));
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+                    ? new JsonResponse([], 201)
+                    : redirect($this->redirectPath());
     }
 }

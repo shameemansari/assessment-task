@@ -3,12 +3,16 @@
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GuestController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
 
 Auth::routes(['register' => false, 'verify' => true]);
+
+Route::get('job-list', [GuestController::class, 'jobList'])->name('jobList');
+Route::get('seeker-list', [GuestController::class, 'candidateList'])->name('seekerList');
 
 Route::middleware(['guest'])->group(function () {
  

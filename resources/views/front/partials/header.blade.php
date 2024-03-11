@@ -106,7 +106,7 @@
 
 
                  <div class="topbar-item">
-                     <a href="#">
+                     <a href="{{ route('seekerList') }}">
                          <div
                              class="mx-1 btn btn-icon btn-hover-transparent-white w-auto d-flex align-items-center px-2">
                              <span class="py-2 px-5 font-weight-bold text-white">
@@ -117,11 +117,11 @@
                  </div>
 
                  <div class="topbar-item">
-                     <a href="#">
+                     <a href="{{ route('jobList') }}">
                          <div
                              class="mx-1 btn btn-icon btn-hover-transparent-white w-auto d-flex align-items-center px-2">
                              <span class="py-2 px-5 font-weight-bold text-white">
-                                 Employer Listing
+                                 Job Listing
                              </span>
                          </div>
                      </a>
@@ -148,7 +148,7 @@
                                  <span
                                      class="text-white opacity-50 font-weight-bold font-size-sm d-none d-md-inline">{{ auth()->user()?->fullName() }}</span>
                                  <span
-                                     class="text-white font-weight-bolder font-size-sm d-none d-md-inline">{{ ucfirst(auth()->user()?->roles?->first()->name) }}</span>
+                                     class="text-white font-weight-bolder font-size-sm d-none d-md-inline">{{ ucfirst(auth()->user()?->roles?->first()?->name) }}</span>
                              </div>
                              <span class="symbol symbol-35">
                                  <span class="symbol-label font-size-h5 font-weight-bold text-white bg-white-o-30">

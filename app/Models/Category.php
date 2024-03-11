@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Skill extends Model
+class Category extends Model
 {
     use HasFactory;
-    public $table = 'skills';
 
-    public $fillable = [
-        'name'
-    ];
+    public $table = 'categories';
+
+    public $fillable = ['name'];
 }
