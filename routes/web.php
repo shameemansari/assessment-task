@@ -13,8 +13,7 @@ Auth::routes(['register' => false, 'verify' => true]);
 
 Route::get('job-list', [GuestController::class, 'jobList'])->name('jobList');
 Route::get('seeker-list', [GuestController::class, 'candidateList'])->name('seekerList');
-Route::get('post-job', [GuestController::class, 'postJob'])->name('postJob.create');
-Route::post('post-job', [GuestController::class, 'storePostJob'])->name('postJob.store');
+
 
 Route::middleware(['guest'])->group(function () {
  
@@ -41,5 +40,11 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['verified', 'auth'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('jobs', [GuestController::class, 'index'])->name('postJob.index');
+    Route::get('jobs/create', [GuestController::class, 'postJob'])->name('postJob.create');
+    Route::get('jobs/{jobId}/edit', [GuestController::class, 'editJob'])->name('postJob.edit');
+    Route::post('jobs', [GuestController::class, 'storePostJob'])->name('postJob.store');
+    Route::put('jobs/update/{jobId}', [GuestController::class, 'updatePostJob'])->name('postJob.update');
 });
     

@@ -104,7 +104,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data, bool $employer = false)
+    protected function create(array $data, $employer = false)
     {
         $user = User::create([
             'first_name' => $data['first_name'],
@@ -145,9 +145,7 @@ class RegisterController extends Controller
     {
         $employerData = $this->employerValidation($request->all())->validate();
          
-        event(new Registered($user = $this->create($request->all())));
-
-        event(new Registered($user = $this->create($request->all())));
+        event(new Registered($user = $this->create($request->all(), true)));
 
         $this->guard()->login($user);
 

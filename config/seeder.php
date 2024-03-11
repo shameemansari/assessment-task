@@ -1953,6 +1953,9 @@ return [
     array('id' => '363','name' => 'JMeter','description' => NULL,'created_at' => '2024-03-10 22:29:44','updated_at' => NULL),
     array('id' => '364','name' => 'Selenium','description' => NULL,'created_at' => '2024-03-10 22:29:44','updated_at' => NULL),
     array('id' => '365','name' => 'SoupUI','description' => NULL,'created_at' => '2024-03-10 22:29:44','updated_at' => NULL),
-    array('id' => '366','name' => 'Load Runner','description' => NULL,'created_at' => '2024-03-10 22:29:44','updated_at' => NULL)
+    array('id' => '366','name' => 'Load Runner','description' => NULL,'created_at' => '2024-03-10 22:29:44','updated_at' => NULL),
+    array('id' => '367','name' => 'Laravel','description' => NULL,'created_at' => '2024-03-10 22:29:44','updated_at' => NULL),
+    array('id' => '368','name' => 'Codeigniter','description' => NULL,'created_at' => '2024-03-10 22:29:44','updated_at' => NULL),
+    array('id' => '369','name' => 'AWS','description' => NULL,'created_at' => '2024-03-10 22:29:44','updated_at' => NULL),
   ),
 ];

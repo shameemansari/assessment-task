@@ -1,4 +1,4 @@
-@if (session()->has('status') && session()->get('status') == 'success')
+@if (session()->has('status') && session()->get('status'))
     <div class="px-4 my-4">
         <div class="alert alert-custom alert-light-primary fade show" role="alert">
             <div class="alert-icon">

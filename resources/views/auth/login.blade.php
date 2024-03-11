@@ -12,7 +12,7 @@
                 <div class="login-form text-center p-7 position-relative overflow-hidden">
 
                     <!--begin::Login Sign in form-->
-                    <div class="login-signin">
+                    <div class="login-signin" style="min-width: 400px;">
                         <div class="mb-10">
                             <h3>Login</h3>
                         </div>

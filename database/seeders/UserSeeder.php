@@ -25,24 +25,24 @@ class UserSeeder extends Seeder
 
         $adminUser->syncRoles('admin');
 
-        $employerUser = User::create([
-            'first_name' => 'NeoSOFT',
-            'last_name' => 'Technologies',
-            'username' => 'employer',
-            'email' => 'employer@itsjiff.com',
-            'password' => Hash::make('password'),
-        ]);
+        // $employerUser = User::create([
+        //     'first_name' => 'NeoSOFT',
+        //     'last_name' => 'Technologies',
+        //     'username' => 'employer',
+        //     'email' => 'employer@itsjiff.com',
+        //     'password' => Hash::make('password'),
+        // ]);
 
-        $employerUser->syncRoles('employer');
+        // $employerUser->syncRoles('employer');
 
-        $seekerUser = User::create([
-            'first_name' => 'Shameem',
-            'last_name' => 'Ansari',
-            'username' => 'seeker',
-            'email' => 'seeker@itsjiff.com',
-            'password' => Hash::make('password'),
-        ]);
+        // $seekerUser = User::create([
+        //     'first_name' => 'Shameem',
+        //     'last_name' => 'Ansari',
+        //     'username' => 'seeker',
+        //     'email' => 'seeker@itsjiff.com',
+        //     'password' => Hash::make('password'),
+        // ]);
 
-        $seekerUser->syncRoles('seeker');
+        // $seekerUser->syncRoles('seeker');
     }
 }
