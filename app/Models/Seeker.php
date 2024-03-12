@@ -23,4 +23,9 @@ class Seeker extends Model
     {
         return $this->belongsTo(User::class,'user_id','id');
     }
+
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class,'seeker_skills','seeker_id','skill_id');
+    }
 }

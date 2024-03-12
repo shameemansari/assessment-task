@@ -28,7 +28,7 @@ class GuestController extends Controller
 
         $user = auth()->user();
         $alreadyApplied = [];
-        if($user->hasRole('seeker'))
+        if($user?->hasRole('seeker'))
         {
             $seekerId = Seeker::select('id')->where('user_id', $user->id)->first()?->id;
             $alreadyApplied = Application::select('job_id')->where('seeker_id', $seekerId)->pluck('job_id')?->toArray();

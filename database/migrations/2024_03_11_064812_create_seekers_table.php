@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('seekers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedSmallInteger('experience')->default(0);
+            $table->decimal('experience',2,1)->default(0);
             $table->string('title')->nullable();
             $table->string('resume')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();

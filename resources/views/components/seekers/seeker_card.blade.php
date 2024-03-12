@@ -61,7 +61,7 @@
                <!--end::Info-->
                <a href="#"
                    class="btn btn-block btn-sm btn-primary font-weight-bolder text-uppercase py-4">
-                    View Candidate
+                    View Resume
                 </a>
            </div>
            <!--end::Body-->

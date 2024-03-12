@@ -105,17 +105,29 @@
                  <!--end::Tablet & Mobile Search-->
 
 
-           
-                 <div class="topbar-item">
-                    <a href="{{ route('dashboard') }}">
-                        <div
+                 @auth
+                    <div class="topbar-item">
+                        <a href="{{ route('dashboard') }}">
+                            <div
                             class="mx-1 btn btn-icon btn-hover-transparent-white w-auto d-flex align-items-center px-2">
                             <span class="py-2 px-5 font-weight-bold text-white">
-                                Dashboard
-                            </span>
-                        </div>
-                    </a>
-                </div>
+                                    Dashboard
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+               
+                    <div class="topbar-item">
+                        <a href="{{ route('profile') }}">
+                            <div
+                                class="mx-1 btn btn-icon btn-hover-transparent-white w-auto d-flex align-items-center px-2">
+                                <span class="py-2 px-5 font-weight-bold text-white">
+                                    Profile
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                @endauth
 
                 @role('seeker')
                 <div class="topbar-item">
@@ -186,7 +198,7 @@
                         <div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px" aria-expanded="false">
                             <div class="d-flex flex-column text-right pr-3">
                                 <span
-                                    class="text-white opacity-50 font-weight-bold font-size-sm d-none d-md-inline">{{ auth()->user()?->fullName() }}</span>
+                                    class="text-white opacity-80 font-weight-bolder font-size-md d-none d-md-inline">{{ auth()->user()?->fullName() }}</span>
                                 <span
                                     class="text-white font-weight-bolder font-size-sm d-none d-md-inline">{{ ucfirst(auth()->user()?->roles?->first()?->name) }}</span>
                             </div>

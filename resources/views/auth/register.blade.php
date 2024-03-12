@@ -109,7 +109,7 @@
                                     <label class="option" style="cursor: pointer">
                                         <span class="option-control">
                                             <span class="radio">
-                                                <input type="radio" name="role" value="candidate" @checked(old('role') == 'candidate')/>
+                                                <input type="radio" name="role" value="seeker" @checked(old('role') == 'seeker')/>
                                                 <span></span>
                                             </span>
                                         </span>
