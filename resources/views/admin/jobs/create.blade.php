@@ -32,7 +32,7 @@
                                         <div class="form-group row">
                                             <label class="col-lg-3 col-form-label text-right">Title:</label>
                                             <div class="col-lg-8">
-                                                <input type="text" class="form-control" name="title" placeholder="Enter Job Title">
+                                                <input type="text" class="form-control" name="title" value="{{ old('title') }}" placeholder="Enter Job Title">
 
                                             </div>
                                         </div>
@@ -41,7 +41,7 @@
                                             <div class="col-lg-8">
                                                 {{-- <textarea placeholder="Enter Job Description" name="description" id="description" class="form-control" cols="30"
                                                     rows="15"></textarea> --}}
-                                                <textarea id="description" name="description"></textarea>
+                                                <textarea id="description" name="description">{{ old('description') }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -62,16 +62,12 @@
                                         <div class="form-group row">
                                             <label class="col-form-label text-right col-lg-3 col-sm-12">Experiences</label>
                                             <div class="col-lg-5 col-md-9 col-sm-12">
-                                                <input id="experienceYear" type="text" class="form-control" value="0" name="years" placeholder="Select Year"/>
+                                                <input id="experienceYear" type="text" class="form-control" value="{{ old('years',0) }}" name="years" placeholder="Select Year"/>
                                                 <br>
-                                                <input id="experienceMonth" type="text" class="form-control" value="0" name="months" placeholder="Select Month"/>
+                                                <input id="experienceMonth" type="text" class="form-control" value="{{ old('months',0) }}" name="months" placeholder="Select Month"/>
                                             </div>
                                         </div>
-
-
                                     </div>
-
-
                                 </div>
                                 <div class="card-footer">
                                     <div class="row">
@@ -123,20 +119,6 @@
             postfix: 'months'
         });
 
-        $('#description').summernote({
-            codeviewFilter: false,
-            codeviewIframeFilter: true,
-            height: 250, 
-            toolbar: [
-                // [groupName, [list of button]]
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['font', ['strikethrough', 'superscript', 'subscript']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['height', ['height']]
-            ]
-        });
-
+      
     </script>
 @endpush

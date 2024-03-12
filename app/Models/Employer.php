@@ -17,8 +17,7 @@ class Employer extends Model
         'founded_in',
         'logo',
         'description',
-        'category_id',
-        'size_id',
+        'location',
     ];
 
     public function user()

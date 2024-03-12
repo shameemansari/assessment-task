@@ -18,8 +18,9 @@ return new class extends Migration
             $table->dateTime('founded_in')->nullable();
             $table->string('logo')->nullable();
             $table->longText('description')->nullable();
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->unsignedBigInteger('size_id')->nullable();
+            $table->string('location')->nullable();
+            // $table->unsignedBigInteger('category_id')->nullable();
+            // $table->unsignedBigInteger('size_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamps();
         });

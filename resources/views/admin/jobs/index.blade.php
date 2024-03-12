@@ -24,7 +24,7 @@
                         </div>
                         <div class="card-toolbar">
                             <!--begin::Dropdown-->
-                            
+
                             <!--end::Dropdown-->
 
                             <!--begin::Button-->
@@ -47,48 +47,52 @@
                     </div>
                     @include('components.alerts.success')
                     @include('components.alerts.error')
-                    
+
                     <div class="card-body">
                         <!--begin: Datatable-->
                         <div class="dataTables_wrapper dt-bootstrap4 no-footer">
-                          
+
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <table
-                                        class="table table-separate table-head-custom table-checkable no-footer"
-                                        id="usersTable" role="grid">
+                                    <table class="table table-separate table-head-custom table-checkable no-footer"
+                                        id="jobTable" role="grid">
                                         <thead>
                                             <tr role="row">
-                                               
+
                                                 <th class="sorting_asc" tabindex="0" aria-controls="kt_datatable"
                                                     rowspan="1" colspan="1" style="width: 259px;"
                                                     aria-sort="ascending"
                                                     aria-label="Agent: activate to sort column descending">Title</th>
                                                 <th class="sorting" tabindex="0" aria-controls="kt_datatable"
                                                     rowspan="1" colspan="1" style="width: 190px;"
-                                                    aria-label="Company Email: activate to sort column ascending">Description</th>
+                                                    aria-label="Company Email: activate to sort column ascending">
+                                                    Description</th>
                                                 <th class="sorting" tabindex="0" aria-controls="kt_datatable"
                                                     rowspan="1" colspan="1" style="width: 127px;"
                                                     aria-label="Company Agent: activate to sort column ascending">Skill
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="kt_datatable"
                                                     rowspan="1" colspan="1" style="width: 127px;"
+                                                    aria-label="Company Agent: activate to sort column ascending">Application Count
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_datatable"
+                                                    rowspan="1" colspan="1" style="width: 127px;"
                                                     aria-label="Company Agent: activate to sort column ascending">Experience
                                                 </th>
-                                              
+
                                                 <th class="sorting_disabled" rowspan="1" colspan="1"
                                                     style="width: 105px;" aria-label="Actions">Actions</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
-                                          
+
                                         </tbody>
 
                                     </table>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <!--end: Datatable-->
                     </div>
@@ -106,15 +110,14 @@
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <script>
         $(document).ready(function() {
-          
-            $('#usersTable').DataTable({
+
+            const jobTable = $('#jobTable').DataTable({
                 responsive: true,
                 processing: true,
                 stateSave: true,
                 serverSide: true,
                 ajax: '{{ route('postJob.index') }}',
-                columns: [
-                    {
+                columns: [{
                         data: 'title',
                         name: 'title',
                     },
@@ -128,11 +131,16 @@
                         searchable: false,
                     },
                     {
+                        data: 'application_count',
+                        name: 'application_count',
+                        searchable: false,
+                    },
+                    {
                         data: 'experience',
                         name: 'experience',
                         searchable: false,
                     },
-                     
+
                     {
                         data: 'action',
                         name: 'action',
@@ -140,8 +148,58 @@
                 ],
             });
 
+            $(document).on('click', '.deleteBtn', function() {
+                const deleteUrl = $(this).data('url');
+                Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't be able to revert this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes, delete it!",
+                        cancelButtonText: "No, cancel!",
+                        reverseButtons: true
+                    }).then(function(result) {
+                        if (result.value) {
 
-          
+                            $.ajax({
+                                url: deleteUrl,
+                                type: 'DELETE',
+                                dataType: 'json',
+                                success: function(response) {
+                                 
+                                    if(response.status) {
+                                        Swal.fire({
+                                            icon: "success",
+                                            title: "Job post is deleted successfully ",
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        });
+                                        jobTable.ajax.reload();
+                                    }
+                                },
+                                error: function(reject){
+                                 
+                                    Swal.fire(
+                                        "Failed",
+                                        "Failed to delete job post",
+                                        "error"
+                                    )
+                                }
+                            });
+                          
+                        } else if (result.dismiss === "cancel") {
+                           
+                            Swal.fire({
+                                icon: "info",
+                                title: "Job post file is safe ",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    });
+            });
+
+
         });
     </script>
 @endpush

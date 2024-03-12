@@ -22,9 +22,10 @@
                        <!--begin::Title-->
                        <div class="d-flex flex-column">
                            <a href="#"
-                               class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">Luca
-                               Doncic</a>
-                           <span class="text-muted font-weight-bold">Head of Development</span>
+                               class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">
+                                {{ $seeker->user?->fullName() }}   
+                            </a>
+                           <span class="text-muted font-weight-bold">{{ $seeker->title }}</span>
                        </div>
                        <!--end::Title-->
                    </div>

@@ -106,6 +106,29 @@
 
 
            
+                 <div class="topbar-item">
+                    <a href="{{ route('dashboard') }}">
+                        <div
+                            class="mx-1 btn btn-icon btn-hover-transparent-white w-auto d-flex align-items-center px-2">
+                            <span class="py-2 px-5 font-weight-bold text-white">
+                                Dashboard
+                            </span>
+                        </div>
+                    </a>
+                </div>
+
+                @role('seeker')
+                <div class="topbar-item">
+                    <a href="#">
+                        <div
+                            class="mx-1 btn btn-icon btn-hover-transparent-white w-auto d-flex align-items-center px-2">
+                            <span class="py-2 px-5 font-weight-bold text-white">
+                                Applied Jobs
+                            </span>
+                        </div>
+                    </a>
+                </div>
+                @endrole
 
                  @role('employer')
                      <div class="topbar-item">
@@ -113,7 +136,7 @@
                              <div
                                  class="mx-1 btn btn-icon btn-hover-transparent-white w-auto d-flex align-items-center px-2">
                                  <span class="py-2 px-5 font-weight-bold text-white">
-                                     Post Job
+                                     Posted Jobs
                                  </span>
                              </div>
                          </a>
@@ -192,9 +215,8 @@
                         <div class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-md">
                             
                                 <!--begin::Header-->
-                                <div class="d-flex flex-column align-items-center py-5 bg-dark-o-5 rounded-top px-4">
-                                    <a href="{{ route('dashboard') }}" class="btn btn-sm btn-info btn-block mb-4">Dashboard</a>
-                                    <form style="width: 100%;" action="{{ route('logout') }}" method="POST">@csrf <button class="btn btn-sm btn-danger btn-block">Logout</button></form>
+                                <div class="d-flex justify-content-center py-5 bg-dark-o-5 rounded-top px-4">
+                                    <form action="{{ route('logout') }}" method="POST">@csrf <button class="btn btn-sm btn-danger px-10">Logout</button></form>
     
                                 </div>
                                 <!--end::Header-->

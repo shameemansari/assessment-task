@@ -24,9 +24,14 @@ class PostedJob extends Model
         return $this->belongsToMany(Skill::class,'job_skills','job_id','skill_id');
     }
 
-    public function user()
+    public function employer()
     {
-        return $this->belongsTo(User::class,'employer_id','id');
+        return $this->belongsTo(Employer::class,'employer_id','id');
+    }
+
+    public function applicants()
+    {
+        return $this->hasMany(Application::class,'job_id','id');
     }
    
 }

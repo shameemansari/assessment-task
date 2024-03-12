@@ -125,6 +125,45 @@
 </div>
 <!--end::Scrolltop-->
 
+<!-- Modal-->
+<div class="modal fade" id="jobApplyModal" tabindex="-1" role="dialog" aria-labelledby="jobApplyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="jobApplyModalLabel">Apply Job</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('application.apply') }}" id="applyForm" method="POST" class="form">
+                    @csrf
+                    <input type="hidden" name="employer_id" id="employerId">
+                    <input type="hidden" name="job_id" id="jobId">
+                    <div class="form-group row mt-2">
+                        <label class="col-form-label text-right col-lg-3 col-sm-12">Headline</label>
+                        <div class="col-lg-9 col-md-9 col-sm-12">
+                            <input type="text" class="form-control" name="headline" placeholder="Enter Headline">
+                        </div>
+                    </div>
+                    <div class="form-group row mt-2">
+                        <label class="col-form-label text-right col-lg-3 col-sm-12">Cover Letter</label>
+                        <div class="col-lg-9 col-md-9 col-sm-12">
+                            <textarea name="cover_letter" id="description"></textarea>
+                        </div>
+                    </div>
+                </form>
+              
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="button" id="jobSubmitBtn" class="btn btn-primary font-weight-bold">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <!--begin::Global Config(global config for global JS scripts)-->
@@ -208,5 +247,85 @@
 <script src="{{ asset('assets/js/pages/crud/forms/widgets/bootstrap-touchspin.js') }}"></script>
 <script src="{{ asset('assets/js/pages/crud/forms/editors/summernote.js') }}"></script>
 <script src="{{ asset('assets/js/pages/features/miscellaneous/sweetalert2.js') }}"></script>
+<script src="{{ asset('assets/js/pages/features/miscellaneous/toastr.js') }}"></script>
+<script>
+    $.ajaxSetup({
+        headers: { 
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $('#description').summernote({
+            codeviewFilter: false,
+            codeviewIframeFilter: true,
+            height: 200, 
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']]
+            ]
+    });
+
+
+    $(document).on('click','.applyBtn', function() {
+        const employerId = $(this).data('employer');
+        const jobId = $(this).data('job');
+        $('#employerId').val(employerId);
+        $('#jobId').val(jobId);
+    });
+
+    $(document).on('click','#jobSubmitBtn', function(e) {
+        let appForm = $('#applyForm');
+        let url = appForm.attr('action');
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data : appForm.serialize(),
+            success: function(response) {
+                console.log(response);
+                if(response.status) {
+                    $('#jobApplyModal').modal('hide');
+                    $('#employerId').val('');
+                    $('#jobId').val('');
+                    Swal.fire({
+                        icon: "success",
+                        title: response.message ?? "Applied for job successfully ",
+                        showConfirmButton: false,
+                        timer: 2500
+                    });
+                } else {
+                    let message = ''; response.message ?? 
+                    if(response.errors) {
+                        message = 'Validation errors : Please provide Headline and Cover letter details';
+                    } else {
+                        message = response.message ?? 'Failed to Apply',
+                    }
+
+                    Swal.fire({
+                        icon: "error",
+                        title: message,
+                        showConfirmButton: false,
+                        timer: 2500
+                    });
+                }
+              
+            },
+            error: function(reject)
+            {
+                console.log(reject);
+                Swal.fire(
+                    "Failed",
+                    "Failed to apply for this job",
+                    "error"
+                )
+            }
+        });
+    });
+</script>
  
 <!--end::Page Scripts-->

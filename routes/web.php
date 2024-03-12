@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GuestController;
+use App\Http\Controllers\PostedJobController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -37,11 +39,15 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['verified', 'auth'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('jobs', [GuestController::class, 'index'])->name('postJob.index');
-    Route::get('jobs/create', [GuestController::class, 'postJob'])->name('postJob.create');
-    Route::get('jobs/{jobId}/edit', [GuestController::class, 'editJob'])->name('postJob.edit');
-    Route::post('jobs', [GuestController::class, 'storePostJob'])->name('postJob.store');
-    Route::put('jobs/update/{jobId}', [GuestController::class, 'updatePostJob'])->name('postJob.update');
-    Route::delete('jobs/{jobId}', [GuestController::class, 'deletePost'])->name('postJob.delete');
+    Route::get('jobs', [PostedJobController::class, 'index'])->name('postJob.index');
+    Route::get('jobs/create', [PostedJobController::class, 'postJob'])->name('postJob.create');
+    Route::get('jobs/{jobId}/edit', [PostedJobController::class, 'editJob'])->name('postJob.edit');
+    Route::post('jobs', [PostedJobController::class, 'storePostJob'])->name('postJob.store');
+    Route::put('jobs/update/{jobId}', [PostedJobController::class, 'updatePostJob'])->name('postJob.update');
+    Route::delete('jobs/{jobId}', [PostedJobController::class, 'deletePost'])->name('postJob.delete');
+
+    Route::post('apply', [ApplicationController::class, 'applyJob'])->name('application.apply');
+
+    
 });
     

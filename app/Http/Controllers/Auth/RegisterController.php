@@ -61,7 +61,7 @@ class RegisterController extends Controller
             'username' => ['required', 'string', 'max:255', 'unique:users,username'],
             'role' => ['required', 'in:employer,candidate'],
             'agree' => ['accepted'],
-            'company' => ['required_if:role,==,employer','string', 'max:255'],
+            'company' => ['required_if:role,employer','nullable','string', 'max:255'],
             'password' => ['required', 'string', Password::min(8)->numbers()->symbols(),'confirmed'],
         ],[
             'regex' => ':attribute must contain atleast one Special character'
@@ -104,4 +104,5 @@ class RegisterController extends Controller
         return $user;
     }
 
+   
 }
