@@ -47,17 +47,16 @@
                                         Remember me
                                     </label>
                                 </div>
-                                <a href="{{ route('password.request') }}" class="text-muted text-hover-primary">Forgot
-                                    Password ?</a>
+                              
                             </div>
                             <button type="submit" class="btn btn-primary font-weight-bold px-9 py-4 mt-3 mx-4">Sign
                                 In</button>
                         </form>
-                        <div class="mt-5 d-flex flex-column bg-white py-4">
-                            <a href="{{ route('register.employer') }}"
-                                class="my-2 text-success font-weight-bolder text-hover-primary font-weight-bold ">Employer Registration</a> 
-                            <a href="{{ route('register.seeker') }}"
-                                class="my-2 text-success font-weight-bolder text-hover-primary font-weight-bold ">Job Seeker Registration</a>
+                        <div class="mt-10 d-flex justify-content-between bg-white">
+                            <a href="{{ route('password.request') }}" class="text-muted pt-1 text-hover-primary">Forgot
+                                Password ?</a>
+                            <a href="{{ route('register') }}"
+                                class="text-success text-hover-primary font-weight-bold ">Sign Up!</a> 
                         </div>
                          
                     </div>

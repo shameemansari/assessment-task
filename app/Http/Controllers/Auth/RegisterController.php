@@ -59,6 +59,9 @@ class RegisterController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'username' => ['required', 'string', 'max:255', 'unique:users,username'],
+            'role' => ['required', 'in:employer,candidate'],
+            'agree' => ['accepted'],
+            'company' => ['required_if:role,==,employer','string', 'max:255'],
             'password' => ['required', 'string', Password::min(8)->numbers()->symbols(),'confirmed'],
         ],[
             'regex' => ':attribute must contain atleast one Special character'
@@ -68,43 +71,20 @@ class RegisterController extends Controller
             'username' => 'Username',
             'email' => 'Email address',
             'password' => 'Password',
+            'company' => 'Company',
+            'role' => 'Registration Type',
+            'agree' => 'Termsn & Condition',
         ]);
     }
 
-    /**
-     * Get a validator for an incoming employer registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function employerValidation(array $data)
-    {
-        return Validator::make($data, [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'username' => ['required', 'string', 'max:255', 'unique:users,username'],
-            'company' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', Password::min(8)->numbers()->symbols(),'confirmed'],
-        ],[
-            'regex' => ':attribute must contain atleast one Special character'
-        ],[
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
-            'username' => 'Username',
-            'email' => 'Email address',
-            'company' => 'Company Name',
-            'password' => 'Password',
-        ]);
-    }
-
+    
     /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data, $employer = false)
+    protected function create(array $data)
     {
         $user = User::create([
             'first_name' => $data['first_name'],
@@ -114,7 +94,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        if($employer) {
+        if(!empty($data['role']) && $data['role'] == 'employer') {
             $user->syncRoles('employer');
             $newEmployer = Employer::create(['company' => $data['company'], 'user_id' => $user->id]);
         } else {
@@ -124,37 +104,4 @@ class RegisterController extends Controller
         return $user;
     }
 
-    public function seekerRegistration(Request $request)
-    {
-        $this->validator($request->all())->validate();
-
-        event(new Registered($user = $this->create($request->all())));
-
-        $this->guard()->login($user);
-
-        if ($response = $this->registered($request, $user)) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-                    ? new JsonResponse([], 201)
-                    : redirect($this->redirectPath());
-    }
-
-    public function employerRegistration(Request $request)
-    {
-        $employerData = $this->employerValidation($request->all())->validate();
-         
-        event(new Registered($user = $this->create($request->all(), true)));
-
-        $this->guard()->login($user);
-
-        if ($response = $this->registered($request, $user)) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-                    ? new JsonResponse([], 201)
-                    : redirect($this->redirectPath());
-    }
 }
