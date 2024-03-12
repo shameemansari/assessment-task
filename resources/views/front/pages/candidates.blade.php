@@ -80,7 +80,6 @@
                         <div class="container">
                             <div class="row" id="candidateContainer">
                             </div>
-                        
                             <!--end::Row-->
                         </div>
                     </div>

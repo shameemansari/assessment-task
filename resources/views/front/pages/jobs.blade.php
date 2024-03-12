@@ -72,7 +72,7 @@
                     <!--end::Aside-->
 
                     <!--begin::Entry-->
-                    <div class="d-flex ">
+                    <div class="d-flex flex-grow-1">
                         <!--begin::Container-->
                         <div class="container">
                             <div class="row" id="jobListContainer">
