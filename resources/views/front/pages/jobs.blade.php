@@ -2,8 +2,8 @@
 
 
 @section('content')
-     <!--begin::Content-->
-     <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
+    <!--begin::Content-->
+    <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
 
         <!--begin::Entry-->
         <div class="d-flex flex-column-fluid">
@@ -22,18 +22,20 @@
                                 <form>
 
                                     <div class="form-group mb-8">
-                                        <label class="font-size-h5 font-weight-bolder text-dark mb-4">Designation</label>
-                                        <select class="form-control selectpicker" name="designation" data-size="5" data-live-search="true">
+                                        <label class="font-size-h5 font-weight-bolder text-dark mb-4">Skills</label>
+                                        <select class="form-control selectpicker" name="designation" data-size="5"
+                                            data-live-search="true">
                                             <option selected value="">Select</option>
-                                            {{-- @foreach ($allCategories as $categoryId => $categoryName)
-                                                <option value="{{ $categoryId }}">{{ $categoryName }}</option>
-                                            @endforeach --}}
+                                        @foreach ($allSkills as $categoryId => $categoryName)
+                                            <option value="{{ $categoryId }}">{{ $categoryName }}</option>
+                                        @endforeach
                                         </select>
                                     </div>
-  
+
                                     <div class="form-group mb-8">
                                         <label class="font-size-h5 font-weight-bolder text-dark mb-4">Location</label>
-                                        <select class="form-control selectpicker" name="location" data-size="5" data-live-search="true">
+                                        <select class="form-control selectpicker" name="location" data-size="5"
+                                            data-live-search="true">
                                             <option selected value="">All</option>
                                             {{-- @foreach ($allLocations as $state)
                                                 @if ($state->cities?->isNotEmpty())
@@ -45,8 +47,8 @@
                                         </select>
                                     </div>
 
-                                     <!--begin::Work Type-->
-                                     <div class="form-group mb-11">
+                                    <!--begin::Work Type-->
+                                    <div class="form-group mb-11">
                                         <label class="font-size-h5 font-weight-bolder text-dark mb-4">Work Type</label>
                                         <!--begin::Checkbox list-->
                                         <div class="checkbox-list">
@@ -138,47 +140,48 @@
 
                                     <!--begin::Price Slider-->
                                     <div class="form-group mb-13">
-                                        <div class="font-weight-bolder mb-15">Salary Range <span
-                                                class="text-uppercase">( LPA )</span></div>
-                                         
+                                        <div class="font-weight-bolder mb-15">Salary Range <span class="text-uppercase">(
+                                                LPA )</span></div>
+
 
                                         <div id="kt_nouislider_3"
-                                                class="nouislider noUi-target noUi-rtl noUi-horizontal noUi-txt-dir-ltr">
-                                                <div class="noUi-base">
-                                                    <div class="noUi-connects">
-                                                        <div class="noUi-connect"
-                                                            style="transform: translate(50%, 0px) scale(0.342857, 1);">
-                                                        </div>
+                                            class="nouislider noUi-target noUi-rtl noUi-horizontal noUi-txt-dir-ltr">
+                                            <div class="noUi-base">
+                                                <div class="noUi-connects">
+                                                    <div class="noUi-connect"
+                                                        style="transform: translate(50%, 0px) scale(0.342857, 1);">
                                                     </div>
-                                                    <div class="noUi-origin"
-                                                        style="transform: translate(-157.143%, 0px); z-index: 5;">
-                                                        <div class="noUi-handle noUi-handle-lower" data-handle="0"
-                                                            tabindex="0" role="slider" aria-orientation="horizontal"
-                                                            aria-valuemin="0.0" aria-valuemax="80.0" aria-valuenow="20.0"
-                                                            aria-valuetext="20.00">
-                                                            <div class="noUi-touch-area"></div>
-                                                            <div class="noUi-tooltip">20.00</div>
-                                                        </div>
+                                                </div>
+                                                <div class="noUi-origin"
+                                                    style="transform: translate(-157.143%, 0px); z-index: 5;">
+                                                    <div class="noUi-handle noUi-handle-lower" data-handle="0"
+                                                        tabindex="0" role="slider" aria-orientation="horizontal"
+                                                        aria-valuemin="0.0" aria-valuemax="80.0" aria-valuenow="20.0"
+                                                        aria-valuetext="20.00">
+                                                        <div class="noUi-touch-area"></div>
+                                                        <div class="noUi-tooltip">20.00</div>
                                                     </div>
-                                                    <div class="noUi-origin"
-                                                        style="transform: translate(-500%, 0px); z-index: 6;">
-                                                        <div class="noUi-handle noUi-handle-upper" data-handle="1"
-                                                            tabindex="0" role="slider" aria-orientation="horizontal"
-                                                            aria-valuemin="20.0" aria-valuemax="200.0" aria-valuenow="80.0"
-                                                            aria-valuetext="80.00">
-                                                            <div class="noUi-touch-area"></div>
-                                                            <div class="noUi-tooltip">80.0</div>
-                                                        </div>
+                                                </div>
+                                                <div class="noUi-origin"
+                                                    style="transform: translate(-500%, 0px); z-index: 6;">
+                                                    <div class="noUi-handle noUi-handle-upper" data-handle="1"
+                                                        tabindex="0" role="slider" aria-orientation="horizontal"
+                                                        aria-valuemin="20.0" aria-valuemax="200.0" aria-valuenow="80.0"
+                                                        aria-valuetext="80.00">
+                                                        <div class="noUi-touch-area"></div>
+                                                        <div class="noUi-tooltip">80.0</div>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
 
                                     </div>
                                     <!--end::Price Slider-->
 
 
                                     <div class="d-flex justify-content-between">
-                                        <button type="reset" class="btn btn-secondary font-weight-bolder px-8">Reset</button>
+                                        <button type="reset"
+                                            class="btn btn-secondary font-weight-bolder px-8">Reset</button>
                                         <button type="submit"
                                             class="btn btn-primary font-weight-bolder mr-2 px-8">Search</button>
                                     </div>
@@ -194,9 +197,8 @@
                     <!--begin::Entry-->
                     <div class="d-flex ">
                         <!--begin::Container-->
-                        <div class=" container " id="jobListContainer">
-                            <div class="row">
-                                @include('components.jobs.job_list', ['jobs' => $allJobs])
+                        <div class="container">
+                            <div class="row" id="jobListContainer">
                             </div>
                         </div>
                         <!--end::Container-->
@@ -214,6 +216,44 @@
 
 
 @push('scripts')
-<script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-<script src="{{ asset('assets/js/pages/crud/datatables/advanced/column-rendering.js') }}"></script>
+    <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/crud/datatables/advanced/column-rendering.js') }}"></script>
+    <script>
+        $(window).on('hashchange', function() {
+            if (window.location.hash) {
+                var page = window.location.hash.replace('#', '');
+                if (page == Number.NaN || page <= 0) {
+                    return false;
+                } else {
+                    getData(page);
+                }
+            }
+        });
+
+        $(document).ready(function() {
+            $(document).on('click', '.pagination a', function(event) {
+                event.preventDefault();
+                $('li').removeClass('active');
+                $(this).parent('li').addClass('active');
+                var myurl = $(this).attr('href');
+                var page = $(this).attr('href').split('page=')[1];
+                getData(page);
+            });
+        });
+
+        function getData(page) {
+            $.ajax({
+                url: '?page=' + page,
+                type: "GET",
+                datatype: "html"
+            }).done(function(data) {
+                $("#jobListContainer").empty().html(data);
+                location.hash = page;
+            }).fail(function(jqXHR, ajaxOptions, thrownError) {
+                alert('No response from server');
+            });
+        }
+
+        getData(1);
+    </script>
 @endpush

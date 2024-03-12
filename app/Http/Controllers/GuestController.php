@@ -17,26 +17,46 @@ class GuestController extends Controller
    
     public function jobList(Request $request)
     {
+        $alreadyApplied = [];
+
+        $user = auth()->user();
+
         $allCategories = Cache::remember('allCategories', 60, function() {
             return Category::latest('id')->pluck('name','id');
+        });
+
+        $allSkills = Cache::remember('allSkills', 60, function() {
+            return Skill::latest('id')->pluck('name','id');
         });
 
         $jobTypes = Cache::remember('jobTypes', 60, function() {
             return JobType::latest('id')->pluck('name','id');
         });
-        $allJobs = PostedJob::with(['skills','employer'])->paginate(10);
-
-        $user = auth()->user();
-        $alreadyApplied = [];
+       
         if($user?->hasRole('seeker'))
         {
             $seekerId = Seeker::select('id')->where('user_id', $user->id)->first()?->id;
             $alreadyApplied = Application::select('job_id')->where('seeker_id', $seekerId)->pluck('job_id')?->toArray();
         }
 
-        // $allLocations = State::with(['cities:id,name,state_id'])->lazy();
-        // return view('listing.job_list', compact('allCategories','allLocations','jobTypes'));
-        return view('front.pages.jobs', compact('allJobs','alreadyApplied'));
+        if($request->ajax())
+        {
+
+            $allJobs = PostedJob::query()->with(['skills','employer']);
+
+            if(!empty($request->skills)) {
+                $searchSkills = array_filter($request->skills);
+                // $allJobs = $allJobs->whereHas('skills', function($query){
+                //     $query->where('')
+                // });
+            }
+            $allJobs = $allJobs->paginate(10);
+
+            $html = view('components.jobs.job_list', ['jobs' => $allJobs, 'alreadyApplied' => $alreadyApplied])->render();
+            return response()->json($html);
+        }
+ 
+        return view('front.pages.jobs', compact('allCategories','allSkills','jobTypes'));
     }
 
     public function candidateList(Request $request)
