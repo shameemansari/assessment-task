@@ -50,6 +50,7 @@ Route::middleware(['verified', 'auth'])->group(function () {
     Route::delete('jobs/{jobId}', [PostedJobController::class, 'deletePost'])->name('postJob.delete');
 
     Route::post('apply', [ApplicationController::class, 'applyJob'])->name('application.apply');
+    Route::get('applied-jobs', [ApplicationController::class, 'appliedJobs'])->name('application.jobs');
 
     
 });

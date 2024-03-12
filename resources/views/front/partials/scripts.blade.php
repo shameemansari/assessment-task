@@ -149,7 +149,7 @@
                     <div class="form-group row mt-2">
                         <label class="col-form-label text-right col-lg-3 col-sm-12">Cover Letter</label>
                         <div class="col-lg-9 col-md-9 col-sm-12">
-                            <textarea name="cover_letter" id="description"></textarea>
+                            <textarea name="cover_letter" id="desc"></textarea>
                         </div>
                     </div>
                 </form>
@@ -255,7 +255,7 @@
         }
     });
 
-    $('#description').summernote({
+    $('#desc').summernote({
             codeviewFilter: false,
             codeviewIframeFilter: true,
             height: 200, 
@@ -299,11 +299,11 @@
                         timer: 2500
                     });
                 } else {
-                    let message = ''; response.message ?? 
+                    let message = '';
                     if(response.errors) {
                         message = 'Validation errors : Please provide Headline and Cover letter details';
                     } else {
-                        message = response.message ?? 'Failed to Apply',
+                        message = response.message ?? 'Failed to Apply';
                     }
 
                     Swal.fire({

@@ -131,7 +131,7 @@
 
                 @role('seeker')
                 <div class="topbar-item">
-                    <a href="#">
+                    <a href="{{ route('application.jobs') }}">
                         <div
                             class="mx-1 btn btn-icon btn-hover-transparent-white w-auto d-flex align-items-center px-2">
                             <span class="py-2 px-5 font-weight-bold text-white">
