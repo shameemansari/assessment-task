@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Employer;
+use App\Models\Seeker;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
@@ -26,24 +28,29 @@ class UserSeeder extends Seeder
 
         $adminUser->syncRoles('admin');
 
-        // $employerUser = User::create([
-        //     'first_name' => 'NeoSOFT',
-        //     'last_name' => 'Technologies',
-        //     'username' => 'employer',
-        //     'email' => 'employer@itsjiff.com',
-        //     'password' => Hash::make('password'),
-        // ]);
+        $employerUser = User::create([
+            'first_name' => 'NeoSOFT',
+            'last_name' => 'Tech',
+            'username' => 'employer',
+            'email_verified_at' => now(),
+            'email' => 'employer@itsjiff.com',
+            'password' => Hash::make('password'),
+        ]);
 
-        // $employerUser->syncRoles('employer');
+        Employer::create(['company' => 'Artisans Intelligence', 'user_id' => $employerUser->id]);
 
-        // $seekerUser = User::create([
-        //     'first_name' => 'Shameem',
-        //     'last_name' => 'Ansari',
-        //     'username' => 'seeker',
-        //     'email' => 'seeker@itsjiff.com',
-        //     'password' => Hash::make('password'),
-        // ]);
+        $employerUser->syncRoles('employer');
 
-        // $seekerUser->syncRoles('seeker');
+        $seekerUser = User::create([
+            'first_name' => 'Shameem',
+            'last_name' => 'Ansari',
+            'username' => 'seeker',
+            'email_verified_at' => now(),
+            'email' => 'seeker@itsjiff.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        Seeker::create(['user_id' => $seekerUser->id]);
+        $seekerUser->syncRoles('seeker');
     }
 }

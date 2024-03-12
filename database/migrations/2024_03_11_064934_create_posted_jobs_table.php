@@ -18,6 +18,8 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->unsignedSmallInteger('years')->default(0);
             $table->unsignedSmallInteger('months')->default(0);
+            $table->unsignedSmallInteger('job_type_id')->nullable();
+            $table->unsignedSmallInteger('location_id')->nullable();
             $table->foreign('employer_id')->references('id')->on('employers')->cascadeOnDelete();
             $table->timestamps();
         });

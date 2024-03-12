@@ -56,6 +56,7 @@
                                                 <input type="text" name="company" value="{{ $userData['company'] ?? null }}"
                                                     class="form-control">
                                             </div>
+                                           
                                         @endrole
 
                                         @role('seeker')

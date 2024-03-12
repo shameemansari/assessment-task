@@ -149,7 +149,7 @@
                     <div class="form-group row mt-2">
                         <label class="col-form-label text-right col-lg-3 col-sm-12">Cover Letter</label>
                         <div class="col-lg-9 col-md-9 col-sm-12">
-                            <textarea name="cover_letter" id="desc"></textarea>
+                            <textarea name="cover_letter" id="description"></textarea>
                         </div>
                     </div>
                 </form>
@@ -254,7 +254,7 @@
         }
     });
 
-    $('#desc').summernote({
+    $('#description').summernote({
             codeviewFilter: false,
             codeviewIframeFilter: true,
             height: 200, 

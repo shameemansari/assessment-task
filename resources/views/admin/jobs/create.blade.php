@@ -58,6 +58,25 @@
                                                 </select>
                                             </div>
                                         </div>
+  
+
+                                        <div class="form-group row">
+                                            <label class="col-form-label text-right col-lg-3 col-sm-12">Job Type : </label>
+                                            <select class="form-control col-lg-4 ml-4" name="job_type_id">
+                                                @foreach ($jobTypes as $typeId => $typeName)
+                                                    <option value="{{ $typeId }}">{{ $typeName }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-form-label text-right col-lg-3 col-sm-12">Location : </label>
+                                            <select class="form-control col-lg-4 ml-4" name="location_id">
+                                                @foreach ($allLocations as $locationId => $locationName)
+                                                    <option value="{{ $locationId }}">{{ $locationName }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
 
                                         <div class="form-group row">
                                             <label class="col-form-label text-right col-lg-3 col-sm-12">Experiences</label>

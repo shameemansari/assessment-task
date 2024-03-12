@@ -79,6 +79,10 @@
                                                     rowspan="1" colspan="1" style="width: 127px;"
                                                     aria-label="Company Agent: activate to sort column ascending">Experience
                                                 </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_datatable"
+                                                    rowspan="1" colspan="1" style="width: 127px;"
+                                                    aria-label="Company Agent: activate to sort column ascending">Location
+                                                </th>
 
                                                 <th class="sorting_disabled" rowspan="1" colspan="1"
                                                     style="width: 105px;" aria-label="Actions">Actions</th>
@@ -140,7 +144,11 @@
                         name: 'experience',
                         searchable: false,
                     },
-
+                    {
+                        data: 'location_id',
+                        name: 'location_id',
+                        searchable: false,
+                    },
                     {
                         data: 'action',
                         name: 'action',

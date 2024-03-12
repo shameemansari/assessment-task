@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employer;
+use App\Models\JobType;
 use App\Models\Seeker;
 use App\Models\SeekerSkill;
 use App\Models\Skill;

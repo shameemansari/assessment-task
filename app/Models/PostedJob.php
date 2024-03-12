@@ -17,6 +17,8 @@ class PostedJob extends Model
         'description',
         'years',
         'months',
+        'job_type_id',
+        'location_id',
     ];
 
     public function skills()
@@ -32,6 +34,16 @@ class PostedJob extends Model
     public function applicants()
     {
         return $this->hasMany(Application::class,'job_id','id');
+    }
+
+    public function jobtype()
+    {
+        return $this->belongsTo(JobType::class, 'job_type_id','id');
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class, 'location_id','id');
     }
    
 }

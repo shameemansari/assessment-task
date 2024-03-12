@@ -6,6 +6,7 @@ use App\Models\Application;
 use App\Models\Category;
 use App\Models\Employer;
 use App\Models\JobType;
+use App\Models\Location;
 use App\Models\PostedJob;
 use App\Models\Skill;
 use App\Models\Seeker;
@@ -29,6 +30,10 @@ class GuestController extends Controller
             return Skill::latest('id')->pluck('name','id');
         });
 
+        $allLocations = Cache::remember('allLocations', 60, function() {
+            return Location::latest('id')->pluck('name','id');
+        });
+
         $jobTypes = Cache::remember('jobTypes', 60, function() {
             return JobType::latest('id')->pluck('name','id');
         });
@@ -41,22 +46,32 @@ class GuestController extends Controller
 
         if($request->ajax())
         {
-
-            $allJobs = PostedJob::query()->with(['skills','employer']);
+            $allJobs = PostedJob::query()->with(['skills','employer','location','jobtype']);
 
             if(!empty($request->skills)) {
-                $searchSkills = array_filter($request->skills);
-                // $allJobs = $allJobs->whereHas('skills', function($query){
-                //     $query->where('')
-                // });
+                $skillId = (int) $request->skills;
+                $allJobs = $allJobs->whereHas('skills', function($query) use($skillId) {
+                    $query->where('skill_id', $skillId);
+                });
             }
+
+            if(!empty($request->jobtype)) {
+                $jobTypeId = array_filter($request->jobtype);
+                $allJobs = $allJobs->whereIn('job_type_id',  $jobTypeId);
+            }
+
+            if(!empty($request->location)) {
+                $locationId = (int) $request->location;
+                $allJobs = $allJobs->where('location_id', $locationId);
+            }
+
             $allJobs = $allJobs->paginate(10);
 
             $html = view('components.jobs.job_list', ['jobs' => $allJobs, 'alreadyApplied' => $alreadyApplied])->render();
             return response()->json($html);
         }
  
-        return view('front.pages.jobs', compact('allCategories','allSkills','jobTypes'));
+        return view('front.pages.jobs', compact('allCategories','allSkills','jobTypes','allLocations'));
     }
 
     public function candidateList(Request $request)

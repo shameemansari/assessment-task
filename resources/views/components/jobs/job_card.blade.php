@@ -5,8 +5,8 @@
          <div class="d-flex">
              <!--begin::Pic-->
              <div class="flex-shrink-0 mr-7">
-                 <div class="symbol symbol-50 symbol-lg-120">
-                     <img alt="Pic" src="{{ asset('assets/media//users/300_1.jpg') }}" />
+                 <div class="symbol symbol-50 symbol-lg-100">
+                     <img alt="Pic" src="https://ui-avatars.com/api/?background=fb923c&color=fff&name={{ $job->employer?->company }}" />
                  </div>
              </div>
              <!--end::Pic-->
@@ -59,7 +59,7 @@
                                          </g>
                                      </svg><!--end::Svg Icon-->
                                  </span>
-                                 Location
+                                 {{ $job->location?->name ?? '-' }}
                              </a>
                          </div>
                          <!--end::Contacts-->
@@ -121,12 +121,12 @@
                     </span>
                     {{ 'Experience Required : ' . $job->years . ' yrs - '. $job->months . ' months' }}
                 </a>
-                {{-- <a href="#" class="text-dark font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
+                <a href="#" class="text-dark font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
                     <span class="svg-icon svg-icon-md svg-icon-gray-500 mr-1"> 
-                        <i class="flaticon2-location text-primary font-weight-bolder"></i>
+                        <i class="flaticon-confetti text-primary font-weight-bold"></i>
                     </span>
-                    Job Type
-                </a> --}}
+                    {{ $job->jobtype?->name ?? '-' }}
+                </a>
             </div> 
          </div>
       

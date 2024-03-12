@@ -61,6 +61,24 @@
                                         </div>
 
                                         <div class="form-group row">
+                                            <label class="col-form-label text-right col-lg-3 col-sm-12">Job Type : </label>
+                                            <select class="form-control col-lg-4 ml-4" name="job_type_id">
+                                                @foreach ($jobTypes as $typeId => $typeName)
+                                                    <option @selected($typeId == $job->jobtype?->id) value="{{ $typeId }}">{{ $typeName }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-form-label text-right col-lg-3 col-sm-12">Location : </label>
+                                            <select class="form-control col-lg-4 ml-4" name="location_id">
+                                                @foreach ($allLocations as $locationId => $locationName)
+                                                    <option @selected($locationId == $job->location?->id) value="{{ $locationId }}">{{ $locationName }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group row">
                                             <label class="col-form-label text-right col-lg-3 col-sm-12">Experiences</label>
                                             <div class="col-lg-5 col-md-9 col-sm-12">
                                                 <input id="experienceYear" type="text" class="form-control" value="{{ $job->years }}" name="years" placeholder="Select Year"/>
