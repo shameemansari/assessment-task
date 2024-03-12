@@ -28,6 +28,13 @@
     <!--end::Layout Themes-->
 
     <link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
+    <style>
+        .error {
+            color:red !important;
+            text-align: left;
+            display: block;
+        }
+    </style>
     @stack('styles')
 </head>
 <!--end::Head-->

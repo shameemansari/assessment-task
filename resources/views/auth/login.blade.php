@@ -16,7 +16,7 @@
                         <div class="mb-10">
                             <h3>Login</h3>
                         </div>
-                        <form class="form" method="POST" action="{{ route('login') }}">
+                        <form class="form" id="loginForm" method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="form-group mb-5">
                                 <input
@@ -47,7 +47,7 @@
                                         Remember me
                                     </label>
                                 </div>
-                              
+
                             </div>
                             <button type="submit" class="btn btn-primary font-weight-bold px-9 py-4 mt-3 mx-4">Sign
                                 In</button>
@@ -55,10 +55,10 @@
                         <div class="mt-10 d-flex justify-content-between bg-white">
                             <a href="{{ route('password.request') }}" class="text-muted pt-1 text-hover-primary">Forgot
                                 Password ?</a>
-                            <a href="{{ route('register') }}"
-                                class="text-success text-hover-primary font-weight-bold ">Sign Up!</a> 
+                            <a href="{{ route('register') }}" class="text-success text-hover-primary font-weight-bold ">Sign
+                                Up!</a>
                         </div>
-                         
+
                     </div>
                     <!--end::Login Sign in form-->
 
@@ -69,3 +69,31 @@
     </div>
     <!--end::Main-->
 @endsection
+
+
+@push('scripts')
+    <script>
+        $("#loginForm").validate({
+            
+            rules: {
+               
+                'username': "required",
+                'password': {
+                    required: true,
+                    minlength:1,
+                }
+               
+            },
+            messages: {
+                'username': "Please enter your username",
+                'password': {
+                    required: "Please provide a password",
+                    minlength: "Your password must be at least 5 characters long"
+                }
+            },
+            submitHandler: function(form) {
+                form.submit();
+            }
+        });
+    </script>
+@endpush
