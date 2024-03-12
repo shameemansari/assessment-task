@@ -16,6 +16,8 @@ class Seeker extends Model
         'experience',
         'title',
         'resume',
+        'location_id',
+        'job_type_id',
     ];
 
 
@@ -27,5 +29,15 @@ class Seeker extends Model
     public function skills()
     {
         return $this->belongsToMany(Skill::class,'seeker_skills','seeker_id','skill_id');
+    }
+
+    public function jobtype()
+    {
+        return $this->belongsTo(JobType::class, 'job_type_id','id');
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class, 'location_id','id');
     }
 }

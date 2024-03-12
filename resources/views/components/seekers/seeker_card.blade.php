@@ -11,11 +11,12 @@
                    <div class="d-flex align-items-center">
                        <!--begin::Pic-->
                        <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
-                           <div class="symbol symbol-circle symbol-lg-75">
-                               <img src="assets/media/users/300_1.jpg" alt="image">
+                           <div class="symbol symbol-circle symbol-lg-65">
+                               <img  src="https://ui-avatars.com/api/?background=fb923c&color=fff&name={{ $seeker->user?->fullName() }}" alt="image">
                            </div>
                            <div class="symbol symbol-lg-75 symbol-circle symbol-primary d-none">
-                               <span class="font-size-h3 font-weight-boldest">JM</span>
+                               <span class="font-size-h3 font-weight-boldest">
+                               </span>
                            </div>
                        </div>
                        <!--end::Pic-->
@@ -32,37 +33,37 @@
                    <!--end::Title-->
                </div>
                <!--end::User-->
-               <!--begin::Desc-->
-               <p class="mb-7">
-                   I distinguish three <a href="#" class="text-primary pr-1">#XRS-54PQ</a>
-                   objectives First
-                   objectives and nice cooked rice
-               </p>
-               <!--end::Desc-->
+            
                <!--begin::Info-->
                <div class="mb-7">
-                   <div class="d-flex justify-content-between align-items-center">
+                   <div class="d-flex justify-content-between align-items-center my-2">
                        <span class="text-dark-75 font-weight-bolder mr-2">Experience:</span>
-                       <a href="#" class="text-muted text-hover-primary">luca@festudios.com</a>
+                       <a href="#" class="text-muted text-hover-primary">{{ $seeker->experience .' yrs' }}</a>
                    </div>
-                   <div class="d-flex justify-content-between align-items-center">
-                       <span class="text-dark-75 font-weight-bolder mr-2">Work Type:</span>
-                       <a href="#" class="text-muted text-hover-primary">luca@festudios.com</a>
+                   <div class="d-flex justify-content-between align-items-center my-2">
+                       <span class="text-dark-75 font-weight-bolder mr-2">Job Type:</span>
+                       <a href="#" class="text-muted text-hover-primary">{{ $seeker->jobtype?->name ?? '-' }}</a>
                    </div>
-                   <div class="d-flex justify-content-between align-items-cente my-1">
+                   <div class="d-flex justify-content-between align-items-cente my-2">
                        <span class="text-dark-75 font-weight-bolder mr-2">Location:</span>
-                       <a href="#" class="text-muted text-hover-primary">44(76)34254578</a>
+                       <a href="#" class="text-muted text-hover-primary">{{ $seeker->location?->name ?? '-' }}</a>
                    </div>
-                   <div class="d-flex justify-content-between align-items-center">
-                       <span class="text-dark-75 font-weight-bolder mr-2">Skills:</span>
-                       <span class="text-muted font-weight-bold">Barcelona</span>
+                   <div class="d-flex flex-column align-items-start mb-5">
+                       <span class="text-dark-75 font-weight-bolder">Skills:</span>
+                       <span class="text-muted font-weight-bold">
+                            @foreach ($seeker->skills as $skill)
+                            <span class="label my-1 label-default label-inline label-xl font-weight-bold mr-2">{{ $skill->name }}</span>
+                            @endforeach
+                       </span>
                    </div>
                </div>
                <!--end::Info-->
-               <a href="#"
-                   class="btn btn-block btn-sm btn-primary font-weight-bolder text-uppercase py-4">
-                    View Resume
-                </a>
+               @if($seeker->resume)
+                    <a href="{{ asset('storage/resume/'. $seeker->resume) }}" target="_blank"
+                        class="btn btn-block btn-sm btn-primary font-weight-bolder text-uppercase py-4">
+                        View Resume
+                    </a>
+                @endif
            </div>
            <!--end::Body-->
        </div>

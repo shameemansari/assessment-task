@@ -17,6 +17,8 @@ return new class extends Migration
             $table->decimal('experience',2,1)->default(0);
             $table->string('title')->nullable();
             $table->string('resume')->nullable();
+            $table->unsignedSmallInteger('job_type_id')->nullable();
+            $table->unsignedSmallInteger('location_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamps();
         });

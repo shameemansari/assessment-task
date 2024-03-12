@@ -76,11 +76,48 @@ class GuestController extends Controller
 
     public function candidateList(Request $request)
     {
-        $allSeekers = Seeker::with(['user'])->paginate(10);
-        $skills = Cache::remember('skills', 60, function() {
+        
+        $allSkills = Cache::remember('allSkills', 60, function() {
             return Skill::latest('id')->pluck('name','id');
         });
-        return view('front.pages.candidates',compact('allSeekers','skills'));
+        $allLocations = Cache::remember('allLocations', 60, function() {
+            return Location::latest('id')->pluck('name','id');
+        });
+
+        $jobTypes = Cache::remember('jobTypes', 60, function() {
+            return JobType::latest('id')->pluck('name','id');
+        });
+
+        
+        if($request->ajax())
+        {
+            $allSeekers = Seeker::query()->with(['user','skills']);
+
+            if(!empty($request->skills)) {
+                $skillId = (int) $request->skills;
+                $allSeekers = $allSeekers->whereHas('skills', function($query) use($skillId) {
+                    $query->where('skill_id', $skillId);
+                });
+            }
+
+            if(!empty($request->jobtype)) {
+                $jobTypeId = array_filter($request->jobtype);
+                $allSeekers = $allSeekers->whereIn('job_type_id',  $jobTypeId);
+            }
+
+            if(!empty($request->location)) {
+                $locationId = (int) $request->location;
+                $allSeekers = $allSeekers->where('location_id', $locationId);
+            }
+
+            $allSeekers = $allSeekers->paginate(10);
+
+            $html = view('components.seekers.seeker_list', ['allSeekers' => $allSeekers])->render();
+            return response()->json($html);
+        }
+ 
+
+        return view('front.pages.candidates',compact('allSkills','allLocations','jobTypes'));
     }
 
    

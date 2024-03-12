@@ -56,7 +56,6 @@
                                                 <input type="text" name="company" value="{{ $userData['company'] ?? null }}"
                                                     class="form-control">
                                             </div>
-                                           
                                         @endrole
 
                                         @role('seeker')
@@ -80,6 +79,23 @@
                                                     @endforeach
                                                 </select>
                                             </div>
+                                            <div class="col-lg-4 mb-4">
+                                                <label>Location : </label>
+                                                <select class="form-control" id="location_id" name="location_id">
+                                                    @foreach ($userData['allLocations'] as $locationId => $locationName)
+                                                        <option @selected($locationId == $userData['location_id']) value="{{ $locationId }}">{{ $locationName }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-4 mb-4">
+                                                <label>Job Type : </label>
+                                                <select class="form-control" id="job_type_id" name="job_type_id">
+                                                    @foreach ($userData['jobTypes'] as $jobId => $jobTypeName)
+                                                        <option @selected($jobId == $userData['job_type_id']) value="{{ $jobId }}">{{ $jobTypeName }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
                                             
                                             @if(!empty($userData['resume']))
                                                 <div class="col-12 mt-2 mb-4">

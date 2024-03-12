@@ -11,6 +11,7 @@ trait UploadTrait
 
     private function uploadFile(UploadedFile $file,$directoryPath = 'resume', $fileName)
     {
+        
         if (!Storage::disk('public')->exists($directoryPath)) {
             Storage::disk('public')->makeDirectory($directoryPath, $mode = 0777, true, true);
         }
