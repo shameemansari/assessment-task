@@ -25,6 +25,7 @@ class ApplicationController extends Controller
             return response()->json(['status' => false, 'errors' => $validator->messages()]);
         }
         $user = auth()->user();
+        
         $applicantData = $validator->validated();
         $applicantData['user_id'] = $user?->id;
         $applicantData['seeker_id'] = Seeker::select('id')->where('user_id', $user?->id)->first()->id;

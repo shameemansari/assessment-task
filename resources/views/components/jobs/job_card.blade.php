@@ -67,6 +67,7 @@
                      <!--begin::User-->
 
                      <!--begin::Actions-->
+                     @role('seeker')
                      <div class="my-lg-0 my-1">
                          {{-- <a href="#" class="btn btn-sm btn-secondary font-weight-bolder text-uppercase mr-2">View Job</a> --}}
                          @if (in_array($job->id,$alreadyApplied))
@@ -75,6 +76,7 @@
                              <button type="button" data-toggle="modal" data-target="#jobApplyModal" data-employer="{{ $job->employer_id }}" data-job="{{ $job->id }}" class="btn btn-sm btn-light-info btn-lg font-weight-bolder applyBtn text-uppercase px-5">Apply</button>
                          @endif
                      </div>
+                     @endrole
                      <!--end::Actions-->
                  </div>
                  <!--end::Title-->

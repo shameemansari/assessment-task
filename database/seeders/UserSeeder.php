@@ -28,29 +28,29 @@ class UserSeeder extends Seeder
 
         $adminUser->syncRoles('admin');
 
-        $employerUser = User::create([
-            'first_name' => 'NeoSOFT',
-            'last_name' => 'Tech',
-            'username' => 'employer',
-            'email_verified_at' => now(),
-            'email' => 'employer@itsjiff.com',
-            'password' => Hash::make('password'),
-        ]);
+        // $employerUser = User::create([
+        //     'first_name' => 'NeoSOFT',
+        //     'last_name' => 'Tech',
+        //     'username' => 'employer',
+        //     'email_verified_at' => now(),
+        //     'email' => 'employer@itsjiff.com',
+        //     'password' => Hash::make('password'),
+        // ]);
 
-        Employer::create(['company' => 'Artisans Intelligence', 'user_id' => $employerUser->id]);
+        // Employer::create(['company' => 'Artisans Intelligence', 'user_id' => $employerUser->id]);
 
-        $employerUser->syncRoles('employer');
+        // $employerUser->syncRoles('employer');
 
-        $seekerUser = User::create([
-            'first_name' => 'Shameem',
-            'last_name' => 'Ansari',
-            'username' => 'seeker',
-            'email_verified_at' => now(),
-            'email' => 'seeker@itsjiff.com',
-            'password' => Hash::make('password'),
-        ]);
+        // $seekerUser = User::create([
+        //     'first_name' => 'Shameem',
+        //     'last_name' => 'Ansari',
+        //     'username' => 'seeker',
+        //     'email_verified_at' => now(),
+        //     'email' => 'seeker@itsjiff.com',
+        //     'password' => Hash::make('password'),
+        // ]);
 
-        Seeker::create(['user_id' => $seekerUser->id]);
-        $seekerUser->syncRoles('seeker');
+        // Seeker::create(['user_id' => $seekerUser->id]);
+        // $seekerUser->syncRoles('seeker');
     }
 }
