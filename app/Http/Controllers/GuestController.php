@@ -65,7 +65,7 @@ class GuestController extends Controller
                 $allJobs = $allJobs->where('location_id', $locationId);
             }
 
-            $allJobs = $allJobs->paginate(10);
+            $allJobs = $allJobs->latest()->paginate(10);
 
             $html = view('components.jobs.job_list', ['jobs' => $allJobs, 'alreadyApplied' => $alreadyApplied])->render();
             return response()->json($html);
@@ -110,7 +110,7 @@ class GuestController extends Controller
                 $allSeekers = $allSeekers->where('location_id', $locationId);
             }
 
-            $allSeekers = $allSeekers->paginate(10);
+            $allSeekers = $allSeekers->latest()->paginate(10);
 
             $html = view('components.seekers.seeker_list', ['allSeekers' => $allSeekers])->render();
             return response()->json($html);

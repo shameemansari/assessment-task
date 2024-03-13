@@ -9,7 +9,17 @@
         <div class="d-flex flex-column-fluid">
             <!--begin::Container-->
             <div class="container">
-            
+                            
+
+            <div class="alert alert-custom alert-notice alert-light-dark fade show" role="alert">
+                <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                <div class="alert-text">Please proceed with <a class="text-info" href="{{ route('profile') }}"><u class="font-weight-bold">Profile</u></a> to update your details after Email Verification.</div>
+                <div class="alert-close">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                    </button>
+                </div>
+            </div>
              
                 <!--Begin::Row-->
                 @role('employer')

@@ -80,15 +80,15 @@
                 'username': "required",
                 'password': {
                     required: true,
-                    minlength: 8,
-                    strongPassword: true,
+                    // minlength: 8,
+                    // strongPassword: true,
                 }
             },
             messages: {
                 'username': "Please enter your username",
                 'password': {
                     required: "Please provide a password",
-                    minlength: "Your password must be at least 8 characters long"
+                    // minlength: "Your password must be at least 8 characters long"
                 }
             },
             submitHandler: function(form) {
