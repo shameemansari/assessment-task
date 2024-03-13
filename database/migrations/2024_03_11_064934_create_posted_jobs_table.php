@@ -14,13 +14,15 @@ return new class extends Migration
         Schema::create('posted_jobs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('employer_id');
-            $table->string('title');
-            $table->longText('description')->nullable();
+            $table->string('title', 150);
+            $table->text('description')->nullable();
             $table->unsignedSmallInteger('years')->default(0);
             $table->unsignedSmallInteger('months')->default(0);
-            $table->unsignedSmallInteger('job_type_id')->nullable();
-            $table->unsignedSmallInteger('location_id')->nullable();
+            $table->unsignedBigInteger('job_type_id')->nullable();
+            $table->unsignedBigInteger('location_id')->nullable();
             $table->foreign('employer_id')->references('id')->on('employers')->cascadeOnDelete();
+            $table->foreign('location_id')->references('id')->on('locations')->cascadeOnDelete();
+            $table->foreign('job_type_id')->references('id')->on('job_types')->cascadeOnDelete();
             $table->timestamps();
         });
     }

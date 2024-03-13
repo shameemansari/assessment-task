@@ -14,13 +14,7 @@ return new class extends Migration
         Schema::create('employers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('company');
-            $table->dateTime('founded_in')->nullable();
-            $table->string('logo')->nullable();
-            $table->longText('description')->nullable();
-            $table->string('location')->nullable();
-            // $table->unsignedBigInteger('category_id')->nullable();
-            // $table->unsignedBigInteger('size_id')->nullable();
+            $table->string('company', 200);
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamps();
         });

@@ -11,6 +11,22 @@
                 style="background-image: url({{ asset('assets/media/bg/bg-3.jpg') }});">
                 <div class="login-form text-center p-7 position-relative overflow-hidden">
 
+                  
+                        <div class="mb-15">
+                            <button type="button" class="btn btn-light-info" data-toggle="popover" title="Portal Credentials"
+                                data-html="true"
+                                data-content="
+                                    <p class='mb-2'>Usernames : </p>
+                                    <span>Admin : <strong>admin</strong> </span><br/>
+                                    <span>Employer : <strong>employer</strong> </span><br/>
+                                    <span>Seeker : <strong>seeker</strong> </span><br/>
+                                    <p class='mt-5 mb-1'>Password is same for all seeded users.</p>
+                                    <span>i.e : <strong>password@123</strong> </span>
+                                "
+                                data-original-title="Popover title">Portal Credentials</button>
+                        </div>
+                     
+
                     <!--begin::Login Sign in form-->
                     <div class="login-signin" style="min-width: 400px;">
                         <div class="mb-10">
@@ -73,22 +89,23 @@
 
 @push('scripts')
     <script>
-        
-
         $("#loginForm").validate({
             rules: {
-                'username': "required",
+                'username': {
+                    required: true,
+                    nowhitespace: true,
+                },
                 'password': {
                     required: true,
-                    // minlength: 8,
-                    // strongPassword: true,
                 }
             },
             messages: {
-                'username': "Please enter your username",
+                'username': {
+                    required: "Please enter your username",
+                    nowhitespace: "Please check your username. No white space is allowed",
+                },
                 'password': {
                     required: "Please provide a password",
-                    // minlength: "Your password must be at least 8 characters long"
                 }
             },
             submitHandler: function(form) {

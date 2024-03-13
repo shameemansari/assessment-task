@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ApplicationController;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GuestController;
@@ -10,21 +9,16 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
-
 Auth::routes();
 
+
+Route::get('/', function () {
+    return to_route('login');
+})->middleware('guest')->name('home');
+ 
+// Guest listings
 Route::get('job-list', [GuestController::class, 'jobList'])->name('jobList');
 Route::get('seeker-list', [GuestController::class, 'candidateList'])->name('seekerList');
-
-
-Route::middleware(['guest'])->group(function () {
- 
-    Route::get('/', function () {
-        return to_route('login');
-    })->name('home');
-   
-});
  
 Route::middleware(['auth'])->group(function () {
 
@@ -40,20 +34,29 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['verified', 'auth'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
+    // Employer and Seeker Details
     Route::get('profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('profile', [ProfileController::class, 'update'])->name('profile.update');
+ 
+    Route::middleware(['role:employer'])->group(function () {
 
-    Route::get('jobs', [PostedJobController::class, 'index'])->name('postJob.index');
-    Route::get('jobs/create', [PostedJobController::class, 'postJob'])->name('postJob.create');
-    Route::get('jobs/{jobId}/edit', [PostedJobController::class, 'editJob'])->name('postJob.edit');
-    Route::post('jobs', [PostedJobController::class, 'storePostJob'])->name('postJob.store');
-    Route::put('jobs/update/{jobId}', [PostedJobController::class, 'updatePostJob'])->name('postJob.update');
-    Route::delete('jobs/{jobId}', [PostedJobController::class, 'deletePost'])->name('postJob.delete');
+        // Employer jobs
+        Route::get('jobs', [PostedJobController::class, 'index'])->name('postJob.index');
+        Route::get('jobs/create', [PostedJobController::class, 'postJob'])->name('postJob.create');
+        Route::post('jobs', [PostedJobController::class, 'storePostJob'])->name('postJob.store');
+        Route::get('jobs/{jobId}/edit', [PostedJobController::class, 'editJob'])->name('postJob.edit');
+        Route::put('jobs/{jobId}/update', [PostedJobController::class, 'updatePostJob'])->name('postJob.update');
+        Route::delete('jobs/{jobId}', [PostedJobController::class, 'deletePost'])->name('postJob.delete');
+    });
 
-    Route::post('apply', [ApplicationController::class, 'applyJob'])->name('application.apply');
-    Route::get('applied-jobs', [ApplicationController::class, 'appliedJobs'])->name('application.jobs');
+    Route::middleware(['role:seeker'])->group(function () {
+        Route::post('apply', [ApplicationController::class, 'applyJob'])->name('application.apply');
+        Route::get('applied-jobs', [ApplicationController::class, 'appliedJobs'])->name('application.jobs');
+        
+        // Resume delete AJAX
+        Route::delete('resume', [ProfileController::class,'resumeDelete'])->name('resume.delete');
+    });
 
-    Route::delete('resume', [ProfileController::class,'resumeDelete'])->name('resume.delete');
 
     
 });

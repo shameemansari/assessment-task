@@ -22,22 +22,6 @@ class GuestController extends Controller
 
         $user = auth()->user();
 
-        $allCategories = Cache::remember('allCategories', 60, function() {
-            return Category::latest('id')->pluck('name','id');
-        });
-
-        $allSkills = Cache::remember('allSkills', 60, function() {
-            return Skill::latest('id')->pluck('name','id');
-        });
-
-        $allLocations = Cache::remember('allLocations', 60, function() {
-            return Location::latest('id')->pluck('name','id');
-        });
-
-        $jobTypes = Cache::remember('jobTypes', 60, function() {
-            return JobType::latest('id')->pluck('name','id');
-        });
-       
         if($user?->hasRole('seeker'))
         {
             $seekerId = Seeker::select('id')->where('user_id', $user->id)->first()?->id;
@@ -71,23 +55,11 @@ class GuestController extends Controller
             return response()->json($html);
         }
  
-        return view('front.pages.jobs', compact('allCategories','allSkills','jobTypes','allLocations'));
+        return view('front.pages.jobs');
     }
 
     public function candidateList(Request $request)
     {
-        
-        $allSkills = Cache::remember('allSkills', 60, function() {
-            return Skill::latest('id')->pluck('name','id');
-        });
-        $allLocations = Cache::remember('allLocations', 60, function() {
-            return Location::latest('id')->pluck('name','id');
-        });
-
-        $jobTypes = Cache::remember('jobTypes', 60, function() {
-            return JobType::latest('id')->pluck('name','id');
-        });
-
         
         if($request->ajax())
         {
@@ -117,7 +89,7 @@ class GuestController extends Controller
         }
  
 
-        return view('front.pages.candidates',compact('allSkills','allLocations','jobTypes'));
+        return view('front.pages.candidates');
     }
 
    

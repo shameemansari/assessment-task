@@ -223,16 +223,16 @@
             rules: {
                 'first_name': {
                     required: true,
-                    maxlength:255,
+                    maxlength:100,
                 },
                 'last_name': {
                     required: true,
-                    maxlength:255,
+                    maxlength:100,
                 },
                 'username': {
                     required: true,
                     minlength:4,
-                    maxlength:255,
+                    maxlength:50,
                     nowhitespace:true,
                     alphanumeric:true,
                 },
@@ -264,11 +264,11 @@
             messages: {
                 'first_name': {
                     required: "Please enter first name",
-                    maxlength:"Your first name must be atleast 255 characters long",
+                    maxlength:"Your first name must be atleast 100 characters long",
                 },
                 'last_name': {
                     required: "Please enter last name",
-                    maxlength:"Your last name must be atleast 255 characters long",
+                    maxlength:"Your last name must be atleast 100 characters long",
                 },
                 'password': {
                     required: "Please provide a password",
@@ -276,7 +276,7 @@
                 },
                 'username': {
                     required: "Please enter username",
-                    maxlength:"Your username must be atleast 255 characters long",
+                    maxlength:"Your username must be atleast 50 characters long",
                 },
                 'email': {
                     required: "Please enter Email",

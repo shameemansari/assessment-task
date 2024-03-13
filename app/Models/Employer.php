@@ -14,9 +14,6 @@ class Employer extends Model
     public $fillable = [
         'user_id',
         'company',
-        'founded_in',
-        'logo',
-        'description',
     ];
 
     public function user()

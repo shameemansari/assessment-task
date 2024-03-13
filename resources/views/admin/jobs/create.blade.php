@@ -152,7 +152,7 @@
             rules: {
                 'title': {
                     required: true,
-                    maxlength:255,
+                    maxlength:150,
                 },
                 'skills[]': {
                     required: true,
@@ -176,7 +176,7 @@
             messages: {
                 'title': {
                     required: "Please enter title",
-                    maxlength:"Your title name must be atleast 255 characters long",
+                    maxlength:"Your title name must be atleast 150 characters long",
                 },
                 'skills[]': {
                     required: "Please select atleast one skill",

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Employer;
 use App\Models\JobType;
 use App\Models\Location;
@@ -10,6 +11,7 @@ use App\Models\Skill;
 use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
@@ -33,51 +35,30 @@ class ProfileController extends Controller
             $userData['resume'] = $seeker->resume;
             $userData['location_id'] = $seeker->location_id;
             $userData['job_type_id'] = $seeker->job_type_id;
-            $userData['allLocations'] =  $allLocations = Cache::remember('allLocations', 60, function () {
+            $userData['allLocations'] = Cache::remember('allLocations', 60, function () {
                 return Location::latest('id')->pluck('name', 'id');
             });
             $userData['jobTypes'] =  Cache::remember('jobTypes', 60, function() {
                 return JobType::latest('id')->pluck('name','id');
             });
-            $allSkills = Skill::pluck('name', 'id');
+       
+            $allSkills = Cache::remember('allSkills', 60, function() {
+                return Skill::latest('id')->pluck('name','id');
+            });
+
             $userData['skills'] = $seeker->skills->pluck('id')?->toArray();
         }
 
         return view('admin.pages.profile', compact('user', 'userData', 'allSkills'));
     }
 
-    public function update(Request $request)
+    public function update(ProfileUpdateRequest $request)
     {
         $user = auth()->user();
-        $validationRules = [
-            'role' => 'required|in:employer,seeker',
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'username' => 'required|unique:users,username,' . $user->id,
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'company' => 'required_if:role,employer|string|max:255',
-            'experience' => 'required_if:role,seeker|numeric|min:0|max:80',
-            'title' => 'required_if:role,seeker|string|max:255',
-            'skills' => 'required_if:role,seeker|array|min:1',
-            'resume' => 'nullable|mimes:pdf|max:5012',
-            'location_id' => 'required_if:role,seeker|exists:locations,id',
-            'job_type_id' => 'required_if:role,seeker|exists:job_types,id',
-        ];
-        $profileData = $request->validate($validationRules, [], [
-            'role' => 'Role',
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
-            'username' => 'Username',
-            'email' => 'Email',
-            'company' => 'Company Name',
-            'experience' => 'Experience',
-            'title' => 'Title',
-            'skills' => 'Skills',
-            'resume' => 'Resume',
-            'location_id' => 'Location',
-            'job_type_id' => 'Job Type',
-        ]);
+        $profileData = $request->validated();
 
+        DB::beginTransaction();
+        
         try {
 
             $user->update([
@@ -114,7 +95,10 @@ class ProfileController extends Controller
                     $seeker->skills()->sync($profileData['skills']);
                 }
             }
+
+            DB::commit();
         } catch (\Exception $e) {
+            DB::rollBack();
             return back()->withErrors(['message' => 'Failed to update profile. ' . $e->getMessage()]);
         }
         return back()->with(['status' => true, 'message' => 'Profile updated successfully']);

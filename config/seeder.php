@@ -378,7 +378,6 @@ return [
     array('city_id' => '320', 'city_name' => 'Amli', 'city_state' => 'Dadra & Nagar Haveli'),
     array('city_id' => '321', 'city_name' => 'Silvassa', 'city_state' => 'Dadra & Nagar Haveli'),
     array('city_id' => '322', 'city_name' => 'Daman and Diu', 'city_state' => 'Daman & Diu'),
-    array('city_id' => '323', 'city_name' => 'Daman and Diu', 'city_state' => 'Daman & Diu'),
     array('city_id' => '324', 'city_name' => 'Asola', 'city_state' => 'Delhi'),
     array('city_id' => '325', 'city_name' => 'Delhi', 'city_state' => 'Delhi'),
     array('city_id' => '326', 'city_name' => 'Aldona', 'city_state' => 'Goa'),

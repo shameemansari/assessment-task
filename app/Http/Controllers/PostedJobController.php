@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostJobCreateRequest;
 use Illuminate\Http\Request;
 use App\Models\Employer;
-use App\Models\JobType;
-use App\Models\Location;
 use App\Models\PostedJob;
-use App\Models\Skill;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class PostedJobController extends Controller
@@ -46,40 +45,20 @@ class PostedJobController extends Controller
                 ->make(true);
         }
 
-       
-
         return view('admin.jobs.index');
     }
 
 
     public function postJob(Request $request)
     {
-        $jobTypes = JobType::pluck('name','id');
-        $allSkills = Skill::pluck('name', 'id');
-        $allLocations = Location::pluck('name', 'id');
-        return view('admin.jobs.create', compact('allSkills','jobTypes','allLocations'));
+        return view('admin.jobs.create');
     }
 
-    public function storePostJob(Request $request)
+    public function storePostJob(PostJobCreateRequest $request)
     {
-        $postedJobData = $request->validate([
-            'title' => 'required|max:255',
-            'description' => 'required',
-            'skills' => 'required|array|min:1',
-            'years' => 'required|integer|min:0|max:80',
-            'months' => 'required|integer|min:0|max:11',
-            'job_type_id' => 'required|exists:job_types,id',
-            'location_id' => 'required|exists:locations,id',
-        ], [], [
-            'title' => 'Title',
-            'description' => 'Description',
-            'years' => 'Years',
-            'months' => 'Months',
-            'skills' => 'Skills',
-            'job_type_id' => 'Job Type',
-            'location_id' => 'Location',
-        ]);
-
+        $postedJobData = $request->validated();
+         
+        DB::beginTransaction();
         try {
             $employerId = Employer::select('id')->where('user_id', auth()->user()->id)->first()?->id;
             if(empty($employerId)) {
@@ -90,7 +69,9 @@ class PostedJobController extends Controller
             if (!empty($postedJobData['skills'])) {
                 $postJob->skills()->attach($postedJobData['skills']);
             }
+            DB::commit();
         } catch (\Exception $e) {
+            DB::rollBack();
             return back()->with(['status' => false, 'message' => $e->getMessage()]);
         }
         return to_route('postJob.index')->with(['status' => true, 'message' => 'Job posted successfully']);
@@ -99,44 +80,27 @@ class PostedJobController extends Controller
     public function editJob(Request $request, $jobId)
     {
         $job = PostedJob::with(['skills', 'employer','location','jobtype'])->findOrFail($jobId);
-        $allSkills = Skill::pluck('name', 'id');
         $selectedSkills = $job?->skills?->pluck('id')?->toArray() ?? [];
-        $jobTypes = JobType::pluck('name','id');
-        $allLocations = Location::pluck('name', 'id');
-        return view('admin.jobs.edit', compact('job', 'allSkills', 'selectedSkills','jobTypes','allLocations'));
+        return view('admin.jobs.edit', compact('job', 'selectedSkills'));
     }
 
-    public function updatePostJob(Request $request, $jobId)
+    public function updatePostJob(PostJobCreateRequest $request, $jobId)
     {
         $job = PostedJob::where('id', $jobId)->first();
         if (!$job) {
             return back()->with(['status' => false, 'message' => "Post job not found"]);
         }
 
-        $postedJobData = $request->validate([
-            'title' => 'required|max:255',
-            'description' => 'required',
-            'skills' => 'required|array|min:1',
-            'years' => 'required|min:0|max:80',
-            'months' => 'required|min:0|max:11',
-            'job_type_id' => 'required|exists:job_types,id',
-            'location_id' => 'required|exists:locations,id',
-        ], [], [
-            'title' => 'Title',
-            'description' => 'Description',
-            'years' => 'Years',
-            'months' => 'Months',
-            'skills' => 'Skills',
-            'job_type_id' => 'Job Type',
-            'location_id' => 'Location',
-        ]);
-
+        $postedJobData = $request->validated();
+        DB::beginTransaction();
         try {
             $job->update($postedJobData);
             if (!empty($postedJobData['skills'])) {
                 $job->skills()->sync($postedJobData['skills']);
             }
+            DB::commit();
         } catch (\Exception $e) {
+            DB::rollBack();
             return back()->withErrors(['message' => $e->getMessage()]);
         }
         return to_route('postJob.index')->with(['status' => true, 'message' => 'Job post updated successfully']);

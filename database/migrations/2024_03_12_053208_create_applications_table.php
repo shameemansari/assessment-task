@@ -18,6 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('seeker_id');
             $table->text('headline')->nullable();
             $table->longText('cover_letter')->nullable();
+            $table->foreign('seeker_id')->references('id')->on('seekers')->cascadeOnDelete();
+            $table->foreign('employer_id')->references('id')->on('employers')->cascadeOnDelete();
+            $table->foreign('job_id')->references('id')->on('posted_jobs')->cascadeOnDelete();
             $table->timestamps();
         });
     }

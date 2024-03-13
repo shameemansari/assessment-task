@@ -15,11 +15,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->decimal('experience',2,1)->default(0);
-            $table->string('title')->nullable();
+            $table->string('title', 150)->nullable();
             $table->string('resume')->nullable();
-            $table->unsignedSmallInteger('job_type_id')->nullable();
-            $table->unsignedSmallInteger('location_id')->nullable();
+            $table->unsignedBigInteger('job_type_id')->nullable();
+            $table->unsignedBigInteger('location_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('location_id')->references('id')->on('locations')->cascadeOnDelete();
+            $table->foreign('job_type_id')->references('id')->on('job_types')->cascadeOnDelete();
             $table->timestamps();
         });
     }

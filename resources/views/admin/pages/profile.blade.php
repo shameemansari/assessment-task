@@ -186,6 +186,7 @@
                     required:function(element) {
                         return isEmployer;
                     },
+                    maxlength:150,
                 },
                 'title': {
                     required:function(element) {
