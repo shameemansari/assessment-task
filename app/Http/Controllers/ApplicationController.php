@@ -33,7 +33,7 @@ class ApplicationController extends Controller
             $alreadyApplied = Application::where([
                 'seeker_id' => $applicantData['seeker_id'],
                 'job_id' => $applicantData['job_id'],
-                // 'employer_id' => $applicantData['employer_id'],
+                'employer_id' => $applicantData['employer_id'],
             ])->exists();
             if($alreadyApplied) {
                 return response()->json(['status' => false, 'message' => 'Candidate has already applied for this job']);
@@ -53,7 +53,7 @@ class ApplicationController extends Controller
         if ($request->ajax()) {
             $user = auth()->user();
             $seekerId = Seeker::select('id')->where('user_id', $user->id)->first()?->id;
-            $allApplied = Application::with(['job.skills'])->where('seeker_id', $seekerId);
+            $allApplied = Application::with(['job.skills'])->where('seeker_id', $seekerId)->latest('id');
             return DataTables::of($allApplied)
                 ->addColumn('skills', function ($row) {
                     $str = '';

@@ -24,7 +24,7 @@
                             @include('components.alerts.success')
                             @include('components.alerts.error')
                             <!--begin::Form-->
-                            <form class="form" method="POST" action="{{ route('postJob.store') }}">
+                            <form class="form" id="postJobForm" method="POST" action="{{ route('postJob.store') }}">
                                 @csrf
                                 <div class="card-body">
 
@@ -42,6 +42,7 @@
                                                 {{-- <textarea placeholder="Enter Job Description" name="description" id="description" class="form-control" cols="30"
                                                     rows="15"></textarea> --}}
                                                 <textarea id="description" name="description">{{ old('description') }}</textarea>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -82,8 +83,10 @@
                                             <label class="col-form-label text-right col-lg-3 col-sm-12">Experiences</label>
                                             <div class="col-lg-5 col-md-9 col-sm-12">
                                                 <input id="experienceYear" type="text" class="form-control" value="{{ old('years',0) }}" name="years" placeholder="Select Year"/>
+                                                <label for="experienceYear" style="display: none;margin:0 5px;" class="error"></label>
                                                 <br>
                                                 <input id="experienceMonth" type="text" class="form-control" value="{{ old('months',0) }}" name="months" placeholder="Select Month"/>
+                                                <label for="experienceMonth" style="display: none;margin:0 5px;" class="error"></label>
                                             </div>
                                         </div>
                                     </div>
@@ -137,6 +140,60 @@
             maxboostedstep: 1,
             postfix: 'months'
         });
+
+
+        $("#postJobForm").validate({
+            highlight: function(element){
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element){
+                $(element).removeClass('is-invalid');
+            },
+            rules: {
+                'title': {
+                    required: true,
+                    maxlength:255,
+                },
+                'skills[]': {
+                    required: true,
+                },
+                'job_type_id': {
+                    required: true,
+                },
+                'location_id': {
+                    required: true,
+                },
+                'years': {
+                    required: true,
+                    range: [0,80],
+                },
+                'months': {
+                    required: true,
+                    range: [0,11],
+                },
+               
+            },
+            messages: {
+                'title': {
+                    required: "Please enter title",
+                    maxlength:"Your title name must be atleast 255 characters long",
+                },
+                'skills[]': {
+                    required: "Please select atleast one skill",
+                },
+                'job_type_id': {
+                    required: "Please select Job Type",
+                },
+                'location_id': {
+                    required: "Please select Location",
+                },
+            
+            },
+            submitHandler: function(form) {
+                form.submit();
+            }
+        });
+    
 
       
     </script>

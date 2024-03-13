@@ -180,6 +180,16 @@
                  </div>
 
                  @guest
+                    <div class="topbar-item">
+                        <a href="{{ route('register') }}">
+                            <div class="mx-1 btn btn-icon w-auto d-flex align-items-center px-2">
+                                <span class="py-2 px-5 font-weight-bold text-white">
+                                    Register
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    
                      <div class="topbar-item">
                          <a href="{{ route('login') }}">
                              <div class="mx-1 btn btn-icon bg-white-o-40 w-auto d-flex align-items-center px-2">
@@ -189,6 +199,8 @@
                              </div>
                          </a>
                      </div>
+
+                  
                  @endguest
 
                  @auth

@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'username' => 'admin',
             'email' => 'admin@itsjiff.com',
             'email_verified_at' => now(),
-            'password' => Hash::make('password'),
+            'password' => Hash::make('password@123'),
         ]);
 
         $adminUser->syncRoles('admin');
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
         //     'username' => 'employer',
         //     'email_verified_at' => now(),
         //     'email' => 'employer@itsjiff.com',
-        //     'password' => Hash::make('password'),
+        //     'password' => Hash::make('password@123'),
         // ]);
 
         // Employer::create(['company' => 'Artisans Intelligence', 'user_id' => $employerUser->id]);
@@ -47,7 +47,7 @@ class UserSeeder extends Seeder
         //     'username' => 'seeker',
         //     'email_verified_at' => now(),
         //     'email' => 'seeker@itsjiff.com',
-        //     'password' => Hash::make('password'),
+        //     'password' => Hash::make('password@123'),
         // ]);
 
         // Seeker::create(['user_id' => $seekerUser->id]);

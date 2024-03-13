@@ -16,7 +16,8 @@
         <!--begin::Header-->
         <div class="d-flex align-items-center mt-5">
             <div class="symbol symbol-100 mr-5">
-                <div class="symbol-label" style="background-image:url('assets/media/users/300_21.jpg')"></div>
+                <div class="symbol-label" style="background-image:url('{{ asset('assets/media/users/300_21.jpg') }}')">
+                </div>
                 <i class="symbol-badge bg-success"></i>
             </div>
             <div class="d-flex flex-column">
@@ -293,7 +294,7 @@
             data: appForm.serialize(),
             success: function(response) {
                 console.log(response);
-                if (response.status) {
+                if (response.status == true) {
                     $('#jobApplyModal').modal('hide');
                     $('#employerId').val('');
                     $('#jobId').val('');
@@ -337,6 +338,9 @@
                 /[\!\@\#\$\%\^\&\*\?\_\~\-\(\)]+/));
         },
         'Password must contain alpha-numeric and atleast one symbol character.');
+
 </script>
+
+@stack('scripts')
 
 <!--end::Page Scripts-->

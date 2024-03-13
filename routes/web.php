@@ -53,6 +53,8 @@ Route::middleware(['verified', 'auth'])->group(function () {
     Route::post('apply', [ApplicationController::class, 'applyJob'])->name('application.apply');
     Route::get('applied-jobs', [ApplicationController::class, 'appliedJobs'])->name('application.jobs');
 
+    Route::delete('resume', [ProfileController::class,'resumeDelete'])->name('resume.delete');
+
     
 });
     

@@ -119,4 +119,17 @@ class ProfileController extends Controller
         }
         return back()->with(['status' => true, 'message' => 'Profile updated successfully']);
     }
+
+    public function resumeDelete(Request $request)
+    {
+        $user = auth()->user();
+        $seeker = Seeker::where('user_id', $user->id)->first();
+        if(!empty($seeker->resume)) {
+            if (Storage::disk('public')->exists('resume/'. $seeker->resume)) {
+                Storage::disk('public')->delete('resume/'. $seeker->resume);
+            }
+            $seeker->update(['resume' => null]);
+        }
+        return response()->json(['status' => true, 'message' => 'Resume deleted successfully']);
+    }
 }
