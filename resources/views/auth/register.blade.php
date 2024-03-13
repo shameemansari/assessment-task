@@ -19,13 +19,13 @@
                     <div class="mb-10">
                         <h3>Sign Up</h3>
                     </div>
-                    <form class="form text-left" method="POST" action="{{ route('register') }}" class="form fv-plugins-bootstrap fv-plugins-framework">
+                    <form class="form text-left" id="registerForm" method="POST" action="{{ route('register') }}" class="form fv-plugins-bootstrap fv-plugins-framework">
                        
                         @csrf
                         <div class="form-group mb-5">
                             <label>First Name <span class="text-danger">*</span></label>
                             <input class="form-control h-auto form-control-solid py-4 px-8" type="text"
-                                placeholder="First Name" required name="first_name" value="{{ old('first_name') }}" />
+                                placeholder="First Name" name="first_name" value="{{ old('first_name') }}" />
                            @error('first_name')
                                <p class="text-danger font-weight-bold text-left m-0 mt-1 mb-0">
                                    {{ $message }}
@@ -35,7 +35,7 @@
                         <div class="form-group mb-5">
                             <label>Last Name <span class="text-danger">*</span></label>
                             <input class="form-control h-auto form-control-solid py-4 px-8" type="text"
-                                placeholder="Last Name" required name="last_name" value="{{ old('last_name') }}" />
+                                placeholder="Last Name" name="last_name" value="{{ old('last_name') }}" />
                            @error('last_name')
                                <p class="text-danger font-weight-bold text-left m-0 mt-1 mb-0">
                                    {{ $message }}
@@ -45,7 +45,7 @@
                         <div class="form-group mb-5">
                             <label>Username <span class="text-danger">*</span></label>
                             <input class="form-control h-auto form-control-solid py-4 px-8" type="text"
-                                placeholder="Username" required name="username" value="{{ old('username') }}" />
+                                placeholder="Username" name="username" value="{{ old('username') }}" />
                            @error('username')
                                <p class="text-danger font-weight-bold text-left m-0 mt-1 mb-0">
                                    {{ $message }}
@@ -56,7 +56,7 @@
                         <div class="form-group mb-5">
                             <label>Email <span class="text-danger">*</span></label>
                             <input class="form-control h-auto form-control-solid py-4 px-8" type="text"
-                                placeholder="Email" required name="email" autocomplete="off" value="{{ old('email') }}"  />
+                                placeholder="Email" name="email" autocomplete="off" value="{{ old('email') }}"  />
                            @error('email')
                                 <p class="text-danger font-weight-bold text-left m-0 mt-1 mb-0">
                                     {{ $message }}
@@ -66,7 +66,7 @@
                         <div class="form-group mb-5">
                             <label>Password </label>
                             <input class="form-control h-auto form-control-solid py-4 px-8" type="password"
-                                placeholder="Password" required name="password" />
+                                placeholder="Password" name="password" id="password" />
                                 @error('password')
                                 <p class="text-danger font-weight-bold text-left m-0 mt-1 mb-0">
                                     {{ $message }}
@@ -76,7 +76,7 @@
                         <div class="form-group mb-5">
                             <label>Confirm Password </label>
                             <input class="form-control h-auto form-control-solid py-4 px-8" type="password"
-                                placeholder="Confirm Password" required name="password_confirmation" />
+                                placeholder="Confirm Password" name="password_confirmation" />
                                 @error('password_confirmation')
                                 <p class="text-danger font-weight-bold text-left m-0 mt-1 mb-0">
                                     {{ $message }}
@@ -148,11 +148,11 @@
                         <div class="form-group mb-5 text-left">
                             <div class="checkbox-inline">
                                 <label class="checkbox m-0">
-                                    <input type="checkbox" name="agree" {{ old('agree', false) == 'on' }}  />
+                                    <input type="checkbox" id="agree" name="agree" {{ old('agree', false) == 'on' }}  />
                                     <span></span>
                                     I Agree the <a href="javascript:void(0)" class="font-weight-bold ml-1">terms and
                                         conditions</a>.
-                                       
+                                       <label for="agree" class="error" style="display:none;margin:0 5px;"></label>
                                 </label>
                             </div>
                             @error('agree')
@@ -210,6 +210,98 @@
                  }
              });
          });
+
+       
+
+        $("#registerForm").validate({
+            highlight: function(element){
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element){
+                $(element).removeClass('is-invalid');
+            },
+            rules: {
+                'first_name': {
+                    required: true,
+                    maxlength:255,
+                },
+                'last_name': {
+                    required: true,
+                    maxlength:255,
+                },
+                'username': {
+                    required: true,
+                    minlength:4,
+                    maxlength:255,
+                    nowhitespace:true,
+                    alphanumeric:true,
+                },
+                'email': {
+                    required: true,
+                    email:true,
+                    maxlength:255,
+                },
+                'password': {
+                    required: true,
+                    minlength: 8,
+                    strongPassword:true,
+                },
+                'password_confirmation': {
+                    required: true,
+                    minlength: 8,
+                    equalTo: "#password",
+                    strongPassword:true,
+                },
+                'agree': {
+                    required: true,
+                },
+                'company': {
+                    required:function(element) {
+                        return $("input[type='radio'][name='role']:checked").val() == 'employer';
+                    }
+                },
+            },
+            messages: {
+                'first_name': {
+                    required: "Please enter first name",
+                    maxlength:"Your first name must be atleast 255 characters long",
+                },
+                'last_name': {
+                    required: "Please enter last name",
+                    maxlength:"Your last name must be atleast 255 characters long",
+                },
+                'password': {
+                    required: "Please provide a password",
+                    minlength: "Your password must be at least 8 characters long"
+                },
+                'username': {
+                    required: "Please enter username",
+                    maxlength:"Your username must be atleast 255 characters long",
+                },
+                'email': {
+                    required: "Please enter Email",
+                    email:"Email is invalid",
+                    maxlength:"Your email must be atleast 255 characters long",
+                },
+                'password_confirmation': {
+                    required: "Please provide confirmed password",
+                    minlength: "Your password must be at least 8 characters long",
+                    equalTo: "Your confirm password must match with password field"
+                },
+                'agree': {
+                    required: "Please accept Terms & Conditions",
+                },
+                'company': {
+                    required: "Please enter Company name",
+                },
+            
+            },
+            submitHandler: function(form) {
+                form.submit();
+            }
+        });
+    
+
       </script>
       <!--end::Page Scripts-->
 @endpush

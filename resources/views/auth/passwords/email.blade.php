@@ -22,7 +22,7 @@
                             </div>
                         @endif
 
-                        <form class="form" method="POST" action="{{ route('password.email') }}"
+                        <form class="form" id="resetForm" method="POST" action="{{ route('password.email') }}"
                             id="kt_login_forgot_form">
                             @csrf
                             <div class="form-group mb-10">
@@ -48,3 +48,40 @@
     </div>
     <!--end::Main-->
 @endsection
+
+
+@push('scripts')
+      
+      <script>
+      
+
+        $("#resetForm").validate({
+            highlight: function(element){
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element){
+                $(element).removeClass('is-invalid');
+            },
+            rules: {
+                'email': {
+                    required: true,
+                    email:true,
+                    maxlength:255,
+                },
+            },
+            messages: {
+                'email': {
+                    required: "Please enter Registered email",
+                    email:"Email is invalid",
+                    maxlength:"Your email must be atleast 255 characters long",
+                },
+            },
+            submitHandler: function(form) {
+                form.submit();
+            }
+        });
+    
+
+      </script>
+      <!--end::Page Scripts-->
+@endpush

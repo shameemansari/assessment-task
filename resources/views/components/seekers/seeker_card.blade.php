@@ -11,7 +11,7 @@
                    <div class="d-flex align-items-center">
                        <!--begin::Pic-->
                        <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
-                           <div class="symbol symbol-circle symbol-lg-65">
+                           <div class="symbol symbol-circle symbol-lg-75">
                                <img  src="https://ui-avatars.com/api/?background=fb923c&color=fff&name={{ $seeker->user?->fullName() }}" alt="image">
                            </div>
                            <div class="symbol symbol-lg-75 symbol-circle symbol-primary d-none">
@@ -51,9 +51,14 @@
                    <div class="d-flex flex-column align-items-start mb-5">
                        <span class="text-dark-75 font-weight-bolder">Skills:</span>
                        <span class="text-muted font-weight-bold">
-                            @foreach ($seeker->skills as $skill)
-                            <span class="label my-1 label-default label-inline label-xl font-weight-bold mr-2">{{ $skill->name }}</span>
-                            @endforeach
+                            @forelse ($seeker->skills as $skill)
+                            <span class="label my-1 label-light-warning label-inline label-xl font-weight-bold mr-2">{{ $skill->name }}</span>
+                            @empty
+                                <span class="label my-1 label-light-danger label-inline label-xl font-weight-bold mr-2">
+                                    Not Provided
+                                </span>
+
+                            @endforelse
                        </span>
                    </div>
                </div>
@@ -63,6 +68,8 @@
                         class="btn btn-block btn-sm btn-primary font-weight-bolder text-uppercase py-4">
                         View Resume
                     </a>
+                    @else
+                    <button type="button" class="btn btn-sm font-weight-bolder text-uppercase py-4 btn-block btn-light-danger">No resume uploaded yet.</button>
                 @endif
            </div>
            <!--end::Body-->

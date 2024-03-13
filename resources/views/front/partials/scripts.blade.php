@@ -126,7 +126,8 @@
 <!--end::Scrolltop-->
 
 <!-- Modal-->
-<div class="modal fade" id="jobApplyModal" tabindex="-1" role="dialog" aria-labelledby="jobApplyModalLabel" aria-hidden="true">
+<div class="modal fade" id="jobApplyModal" tabindex="-1" role="dialog" aria-labelledby="jobApplyModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -153,11 +154,12 @@
                         </div>
                     </div>
                 </form>
-              
+
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-light-danger font-weight-bold"
+                    data-dismiss="modal">Close</button>
                 <button type="button" id="jobSubmitBtn" class="btn btn-primary font-weight-bold">Submit</button>
             </div>
         </div>
@@ -236,7 +238,7 @@
 <script src="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
 <!--end::Global Theme Bundle-->
- 
+
 
 <!--begin::Page Scripts(used by this page)-->
 <script src="{{ asset('assets/js/pages/widgets.js') }}"></script>
@@ -245,49 +247,53 @@
 <script src="{{ asset('assets/js/pages/crud/forms/editors/summernote.js') }}"></script>
 <script src="{{ asset('assets/js/pages/features/miscellaneous/sweetalert2.js') }}"></script>
 <script src="{{ asset('assets/js/pages/features/miscellaneous/toastr.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js" integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
+    integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
+    integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     $.ajaxSetup({
-        headers: { 
+        headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 
     $('#description').summernote({
-            codeviewFilter: false,
-            codeviewIframeFilter: true,
-            height: 200, 
-            toolbar: [
-                // [groupName, [list of button]]
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['font', ['strikethrough', 'superscript', 'subscript']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['height', ['height']]
-            ]
+        codeviewFilter: false,
+        codeviewIframeFilter: true,
+        height: 200,
+        toolbar: [
+            // [groupName, [list of button]]
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']]
+        ]
     });
 
 
-    $(document).on('click','.applyBtn', function() {
+    $(document).on('click', '.applyBtn', function() {
         const employerId = $(this).data('employer');
         const jobId = $(this).data('job');
         $('#employerId').val(employerId);
         $('#jobId').val(jobId);
     });
 
-    $(document).on('click','#jobSubmitBtn', function(e) {
+    $(document).on('click', '#jobSubmitBtn', function(e) {
         let appForm = $('#applyForm');
         let url = appForm.attr('action');
         e.preventDefault();
         $.ajax({
             type: "POST",
             url: url,
-            data : appForm.serialize(),
+            data: appForm.serialize(),
             success: function(response) {
                 console.log(response);
-                if(response.status) {
+                if (response.status) {
                     $('#jobApplyModal').modal('hide');
                     $('#employerId').val('');
                     $('#jobId').val('');
@@ -299,8 +305,9 @@
                     });
                 } else {
                     let message = '';
-                    if(response.errors) {
-                        message = 'Validation errors : Please provide Headline and Cover letter details';
+                    if (response.errors) {
+                        message =
+                            'Validation errors : Please provide Headline and Cover letter details';
                     } else {
                         message = response.message ?? 'Failed to Apply';
                     }
@@ -312,10 +319,9 @@
                         timer: 2500
                     });
                 }
-              
+
             },
-            error: function(reject)
-            {
+            error: function(reject) {
                 console.log(reject);
                 Swal.fire(
                     "Failed",
@@ -325,6 +331,12 @@
             }
         });
     });
+
+    $.validator.addMethod('strongPassword', function(value, element) {
+            return (value.match(/[a-zA-Z]/) && value.match(/[0-9]/) && value.match(
+                /[\!\@\#\$\%\^\&\*\?\_\~\-\(\)]+/));
+        },
+        'Password must contain alpha-numeric and atleast one symbol character.');
 </script>
- 
+
 <!--end::Page Scripts-->
